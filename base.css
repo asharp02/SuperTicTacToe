@@ -1,8 +1,9 @@
 .board{
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border: 3px solid;
     border-collapse: collapse;
+    text-align: center;
 }
 
 .row {
@@ -14,4 +15,5 @@ table td{
     text-align: center;
     width: 33%;
     height: 33%;
+    font-size: 50px;
 }

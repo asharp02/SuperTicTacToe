@@ -1,22 +1,28 @@
-// document.addEventListener("click", function(event){
-//     console.log(event.target);
-// })
-
-
-
 class TicTacToe{
     constructor(){
         this.board = document.querySelectorAll("td")
+        this.initializeGame();
+        const self = this;
+        document.querySelector("#play-again").addEventListener("click", function(){
+            self.clear_board();
+            self.initializeGame();
+        })
+    }
+    initializeGame(){
         this.whose_move = "X";
+        this.is_game_active = true;
         const self = this;
         this.board.forEach(function (cell){
-            cell.addEventListener("click", function(){self.move(cell)})//CALL MOVE FUNCTION
+            cell.addEventListener("click", function(){self.move(cell)})
         });
     }
     clear_board(){
         this.board.forEach(function(value){
             value.innerHTML = "";
         })
+        let board = document.querySelector(".board");
+        board.style.opacity = 1;
+
     }
     place_char(cell){
         if(cell.innerHTML === ""){
@@ -64,24 +70,33 @@ class TicTacToe{
         }
         return false;
     }
+    is_full(){
+        //CHEATING WITH HARDCODED LENGTH!!!
+        for(let i=0; i < 9; i++){
+            if(this.board[i].innerHTML === ""){
+                return false;
+            }
+        }
+        return true;
+    }
+    end_game(){
+        this.is_game_active = false;
+        let board = document.querySelector(".board");
+        board.style.opacity = 0.5;
+    }
     check_board(){
-        if(this.horizontal_check() || this.vertical_check() || this.diagonal_check()){
-            console.log("WINNER!!")
-            //display popup
-            board = document.querySelector(".board").style.opacity = 0.5;
+        const winner = this.horizontal_check() || this.vertical_check() || this.diagonal_check();
+        const full_board = this.is_full();
+        if(winner || full_board){
+            this.end_game();
         }
     }
     move(cell){
-        this.place_char(cell)
-        this.check_board()
-        //did someone win
-        // did they tie
+        if(this.is_game_active){
+            this.place_char(cell)
+            this.check_board()
+        }
     }
 }
 
 board = new TicTacToe;
-
-// const cells = document.querySelectorAll("td")
-// cells.forEach(function(cell){
-//     cell.addEventListener("click", 
-// })
