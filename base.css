@@ -1,0 +1,17 @@
+.board{
+    width: 100px;
+    height: 100px;
+    border: 3px solid;
+    border-collapse: collapse;
+}
+
+.row {
+    border: 3px solid;
+}
+
+table td{
+    border-left: 3px solid;
+    text-align: center;
+    width: 33%;
+    height: 33%;
+}
