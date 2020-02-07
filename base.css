@@ -17,3 +17,17 @@ table td{
     height: 33%;
     font-size: 50px;
 }
+
+.modal{
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    font-size: 25px;
+}
+
+.wrapper{
+    text-align: center;
+    width: 200px;
+    height: 200px;
+    position: relative;
+}

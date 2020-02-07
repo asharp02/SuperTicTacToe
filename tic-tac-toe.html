@@ -10,23 +10,29 @@
 
 </head>
 <body>
-    <table class="board" id="game1">
-        <tr class="row">
-            <td id="1"></td>
-            <td id="2"></td>
-            <td id="3"></td>
-        </tr>
-        <tr class="row">
-            <td id="4"></td>
-            <td id="5"></td>
-            <td id="6"></td>
-        </tr>
-        <tr class=row>
-            <td id="7"></td>
-            <td id="8"></td>
-            <td id="9"></td>
-        </tr>
-    </table>
+    <div class="wrapper" id="game1">
+        <div class="modal" style="display:none">
+            <p class="result_msg"></p>
+        </div>
+            <table class="board">
+                    <tr class="row">
+                        <td id="1"></td>
+                        <td id="2"></td>
+                        <td id="3"></td>
+                    </tr>
+                    <tr class="row">
+                        <td id="4"></td>
+                        <td id="5"></td>
+                        <td id="6"></td>
+                    </tr>
+                    <tr class=row>
+                        <td id="7"></td>
+                        <td id="8"></td>
+                        <td id="9"></td>
+                    </tr>
+            </table>
+        <button id="play-again">Play Again</button>
+    </div>
     <!-- <table class="board" id="game1">
             <tr class="row">
                 <td id="1"></td>
@@ -170,7 +176,7 @@
                         <td id="9"></td>
                     </tr>
             </table> -->
-    <button id="play-again">Play Again</button>
+    <!-- <button id="play-again">Play Again</button> -->
 
     <script src="./tic-tac-toe.js"></script>
 </body>

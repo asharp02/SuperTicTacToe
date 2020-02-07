@@ -1,8 +1,13 @@
 class TicTacToe{
-    constructor(){
-        this.board = document.querySelectorAll("td")
-        this.initializeGame();
+    constructor(id){
+        this.board = document.querySelectorAll(`#${id} td`);
+        this.modal = document.querySelector(`#${id} .modal`);
+        this.modalMsg = document.querySelector(`#${id} .modal .result_msg`);
         const self = this;
+        this.board.forEach(function (cell){
+            cell.addEventListener("click", function(){self.move(cell)})
+        });
+        this.initializeGame();
         document.querySelector("#play-again").addEventListener("click", function(){
             self.clear_board();
             self.initializeGame();
@@ -11,10 +16,6 @@ class TicTacToe{
     initializeGame(){
         this.whose_move = "X";
         this.is_game_active = true;
-        const self = this;
-        this.board.forEach(function (cell){
-            cell.addEventListener("click", function(){self.move(cell)})
-        });
     }
     clear_board(){
         this.board.forEach(function(value){
@@ -22,12 +23,11 @@ class TicTacToe{
         })
         let board = document.querySelector(".board");
         board.style.opacity = 1;
-
+        this.modal.style.display = "none";
     }
     place_char(cell){
         if(cell.innerHTML === ""){
             cell.innerHTML = this.whose_move;
-            this.whose_move = this.whose_move === 'X' ?  'O' : 'X';
         }
 
     }
@@ -82,21 +82,24 @@ class TicTacToe{
     end_game(){
         this.is_game_active = false;
         let board = document.querySelector(".board");
-        board.style.opacity = 0.5;
+        board.style.opacity = 0.2;
     }
     check_board(){
         const winner = this.horizontal_check() || this.vertical_check() || this.diagonal_check();
         const full_board = this.is_full();
         if(winner || full_board){
             this.end_game();
+            this.modalMsg.innerHTML = winner ? `${this.whose_move} WINS!!` : "DRAW!!";
+            this.modal.style.display = "block";
         }
     }
     move(cell){
         if(this.is_game_active){
             this.place_char(cell)
             this.check_board()
+            this.whose_move = this.whose_move === 'X' ?  'O' : 'X';
         }
     }
 }
 
-board = new TicTacToe;
+board = new TicTacToe("game1");
