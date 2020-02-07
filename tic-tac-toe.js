@@ -8,7 +8,8 @@ class TicTacToe{
             cell.addEventListener("click", function(){self.move(cell)})
         });
         this.initializeGame();
-        document.querySelector("#play-again").addEventListener("click", function(){
+        this.playAgainBtn = document.querySelector("#play-again");
+        this.playAgainBtn.addEventListener("click", function(){
             self.clear_board();
             self.initializeGame();
         })
@@ -91,6 +92,7 @@ class TicTacToe{
             this.end_game();
             this.modalMsg.innerHTML = winner ? `${this.whose_move} WINS!!` : "DRAW!!";
             this.modal.style.display = "block";
+            this.playAgainBtn.style.display = "block";
         }
     }
     move(cell){
