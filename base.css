@@ -10,6 +10,10 @@
     border: 3px solid;
 }
 
+.board-row{
+    display: inline-block;
+}
+
 table td{
     border-left: 3px solid;
     text-align: center;

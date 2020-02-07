@@ -10,173 +10,211 @@
 
 </head>
 <body>
+    <div class="board-row">
     <div class="wrapper" id="game1">
         <div class="modal" style="display:none">
             <p class="result_msg"></p>
         </div>
+        <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+        </table>
+    </div>
+    <div class="wrapper" id="game2">
+        <div class="modal" style="display:none">
+            <p class="result_msg"></p>
+        </div>
+        <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class=row>
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+        </table>
+    </div>
+    <div class="wrapper" id="game3">
+        <div class="modal" style="display:none">
+            <p class="result_msg"></p>
+        </div>
+        <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class=row>
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="board-row">
+        <div class="wrapper" id="game4">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
             <table class="board">
                     <tr class="row">
-                        <td id="1"></td>
-                        <td id="2"></td>
-                        <td id="3"></td>
+                        <td data-coord="1"></td>
+                        <td data-coord="2"></td>
+                        <td data-coord="3"></td>
                     </tr>
                     <tr class="row">
-                        <td id="4"></td>
-                        <td id="5"></td>
-                        <td id="6"></td>
+                        <td data-coord="4"></td>
+                        <td data-coord="5"></td>
+                        <td data-coord="6"></td>
                     </tr>
                     <tr class=row>
-                        <td id="7"></td>
-                        <td id="8"></td>
-                        <td id="9"></td>
+                        <td data-coord="7"></td>
+                        <td data-coord="8"></td>
+                        <td data-coord="9"></td>
                     </tr>
             </table>
-        <button id="play-again" style="display:none">Play Again</button>
-    </div>
-    <!-- <table class="board" id="game1">
-            <tr class="row">
-                <td id="1"></td>
-                <td id="2"></td>
-                <td id="3"></td>
-            </tr>
-            <tr class="row">
-                <td id="4"></td>
-                <td id="5"></td>
-                <td id="6"></td>
-            </tr>
-            <tr class=row>
-                <td id="7"></td>
-                <td id="8"></td>
-                <td id="9"></td>
-            </tr>
-    </table>
-
-    <table class="board" id="game1">
-            <tr class="row">
-                <td id="1"></td>
-                <td id="2"></td>
-                <td id="3"></td>
-            </tr>
-            <tr class="row">
-                <td id="4"></td>
-                <td id="5"></td>
-                <td id="6"></td>
-            </tr>
-            <tr class=row>
-                <td id="7"></td>
-                <td id="8"></td>
-                <td id="9"></td>
-            </tr>
-        </table>
-
-        <table class="board" id="game1">
-                <tr class="row">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                </tr>
-                <tr class="row">
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                </tr>
-                <tr class=row>
-                    <td id="7"></td>
-                    <td id="8"></td>
-                    <td id="9"></td>
-                </tr>
-        </table>
-
-        <table class="board" id="game1">
-                <tr class="row">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                </tr>
-                <tr class="row">
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                </tr>
-                <tr class=row>
-                    <td id="7"></td>
-                    <td id="8"></td>
-                    <td id="9"></td>
-                </tr>
-        </table>
-
-        <table class="board" id="game1">
-                <tr class="row">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                </tr>
-                <tr class="row">
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                </tr>
-                <tr class=row>
-                    <td id="7"></td>
-                    <td id="8"></td>
-                    <td id="9"></td>
-                </tr>
-        </table>
-
-        <table class="board" id="game1">
-                <tr class="row">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                </tr>
-                <tr class="row">
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                </tr>
-                <tr class=row>
-                    <td id="7"></td>
-                    <td id="8"></td>
-                    <td id="9"></td>
-                </tr>
-        </table>
-
-        <table class="board" id="game1">
-                <tr class="row">
-                    <td id="1"></td>
-                    <td id="2"></td>
-                    <td id="3"></td>
-                </tr>
-                <tr class="row">
-                    <td id="4"></td>
-                    <td id="5"></td>
-                    <td id="6"></td>
-                </tr>
-                <tr class=row>
-                    <td id="7"></td>
-                    <td id="8"></td>
-                    <td id="9"></td>
-                </tr>
-        </table>
-
-            <table class="board" id="game1">
+        </div>
+        <div class="wrapper" id="game5">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
+            <table class="board">
                     <tr class="row">
-                        <td id="1"></td>
-                        <td id="2"></td>
-                        <td id="3"></td>
+                        <td data-coord="1"></td>
+                        <td data-coord="2"></td>
+                        <td data-coord="3"></td>
                     </tr>
                     <tr class="row">
-                        <td id="4"></td>
-                        <td id="5"></td>
-                        <td id="6"></td>
+                        <td data-coord="4"></td>
+                        <td data-coord="5"></td>
+                        <td data-coord="6"></td>
                     </tr>
                     <tr class=row>
-                        <td id="7"></td>
-                        <td id="8"></td>
-                        <td id="9"></td>
+                        <td data-coord="7"></td>
+                        <td data-coord="8"></td>
+                        <td data-coord="9"></td>
                     </tr>
-            </table> -->
-    <!-- <button id="play-again">Play Again</button> -->
+            </table>
+        </div>
+        <div class="wrapper" id="game6">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
+            <table class="board">
+                    <tr class="row">
+                        <td data-coord="1"></td>
+                        <td data-coord="2"></td>
+                        <td data-coord="3"></td>
+                    </tr>
+                    <tr class="row">
+                        <td data-coord="4"></td>
+                        <td data-coord="5"></td>
+                        <td data-coord="6"></td>
+                    </tr>
+                    <tr class=row>
+                        <td data-coord="7"></td>
+                        <td data-coord="8"></td>
+                        <td data-coord="9"></td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+    <div class="board-row">
+        <div class="wrapper" id="game7">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
+            <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class=row>
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="wrapper" id="game8">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
+            <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class=row>
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="wrapper" id="game9">
+            <div class="modal" style="display:none">
+                <p class="result_msg"></p>
+            </div>
+            <table class="board">
+                <tr class="row">
+                    <td data-coord="1"></td>
+                    <td data-coord="2"></td>
+                    <td data-coord="3"></td>
+                </tr>
+                <tr class="row">
+                    <td data-coord="4"></td>
+                    <td data-coord="5"></td>
+                    <td data-coord="6"></td>
+                </tr>
+                <tr class=row>
+                    <td data-coord="7"></td>
+                    <td data-coord="8"></td>
+                    <td data-coord="9"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <button id="play-again" style="display:none">Play Again</button>
 
     <script src="./tic-tac-toe.js"></script>
 </body>
