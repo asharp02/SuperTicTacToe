@@ -83,7 +83,7 @@ class TicTacToe{
         this.is_game_active = false;
         this.board.style.opacity = 0.2;
     }
-    check_board(char){
+    isBoardComplete(char){
         if(this.is_game_active){
             const winner = this.horizontal_check() || this.vertical_check() || this.diagonal_check();
             const full_board = this.is_full();
@@ -92,7 +92,7 @@ class TicTacToe{
                 this.modalMsg.innerHTML = winner ? `${char} WINS!!` : "DRAW!!";
                 this.modal.style.display = "block";
                 this.playAgainBtn.style.display = "block";
-                this.winner = char;
+                this.winner = winner ? char : "D";
                 return true;
             }
             return false;
@@ -153,15 +153,14 @@ class SuperTicTacToe{
     }
 
     move(cell){
-        let currentBoardId = this.currentBoard.board.id;
         let clickedBoardId = cell.dataset["board"];
         if(this.validBoardIds.includes(clickedBoardId) && cell.innerHTML === ""){
             this.currentBoard = this.boards[clickedBoardId];
             this.currentBoard.place_char(cell, this.whose_move);
-            if(this.currentBoard.check_board(this.whose_move)){
+            if(this.currentBoard.isBoardComplete(this.whose_move)){
                 let superCell = this.superBoard.board.querySelector(`td#cell${cell.dataset["board"]}`);
                 this.superBoard.place_char(superCell, this.currentBoard.winner);
-                this.superBoard.check_board(this.currentBoard.winner);
+                this.superBoard.isBoardComplete(this.currentBoard.winner);
             }
             this.whose_move = this.whose_move === 'X' ?  'O' : 'X';
             let target = cell.dataset["coord"];
