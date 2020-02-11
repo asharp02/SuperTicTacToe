@@ -20,9 +20,29 @@ table td{
 
 .modal{
     position: absolute;
+    height: 200px;
+    width: 200px;
+    font-size: 25px;
+}
+
+.bigmodal{
+    position: absolute;
     top: 30%;
     left: 25%;
-    font-size: 25px;
+    font-size: 75px;
+}
+
+#superboardmodal{
+    width: 605px;
+    height: 605px;
+    position: absolute;
+    z-index: 20;
+    text-align: center;
+}
+
+#superboardmodal .result_msg{
+    font-size: 75px;
+    margin-top: 40%;
 }
 
 .wrapper{
@@ -31,4 +51,17 @@ table td{
     width: 200px;
     height: 200px;
     position: relative;
+}
+
+.wrapper.complete:hover .modal{
+    opacity: 0;
+    display: none !important;
+}
+
+.wrapper.complete .board{
+    opacity: 0.2;
+}
+
+.wrapper.complete:hover .board{
+    opacity: 1;
 }

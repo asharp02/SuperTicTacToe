@@ -1,6 +1,7 @@
 class TicTacToe{
     constructor(id){
         this.board = document.querySelector(`#${id} .board`);
+        this.game = document.querySelector(`#${id}`);
         this.cells = document.querySelectorAll(`#${id} td`);
         this.modal = document.querySelector(`#${id} .modal`);
         this.modalMsg = document.querySelector(`#${id} .modal .result_msg`);
@@ -16,7 +17,7 @@ class TicTacToe{
         this.cells.forEach(function(value){
             value.innerHTML = "";
         })
-        this.board.style.opacity = 1;
+        this.game.classList.remove("complete")
         this.modal.style.display = "none";
     }
     place_char(cell, char){
@@ -30,7 +31,7 @@ class TicTacToe{
             let char1 = this.cells[row].innerHTML;
             let char2 = this.cells[row+1].innerHTML;
             let char3 = this.cells[row+2].innerHTML;
-            if(char1 === char2 && char2 === char3 && char1 !== ""){
+            if(char1 === char2 && char2 === char3 && char1 !== "" && char1 !== "D"){
                 return true;
             }
         }
@@ -42,7 +43,7 @@ class TicTacToe{
             let char2 = this.cells[i+3].innerHTML;
             let char3 = this.cells[i+6].innerHTML;
 
-            if(char1 === char2 && char2 === char3 && char1 !== ""){
+            if(char1 === char2 && char2 === char3 && char1 !== "" && char1 !== "D"){
                 return true;
             }
         }
@@ -56,7 +57,7 @@ class TicTacToe{
         let ru_corner = this.cells[2].innerHTML;
         let ll_corner = this.cells[6].innerHTML;
 
-        if(lu_corner === middle && middle === rl_corner && lu_corner != ""){
+        if(lu_corner === middle && middle === rl_corner && lu_corner != "" && lu_corner !== "D"){
             return true
         }
         if(ru_corner === middle && middle === ll_corner && ru_corner != ""){
@@ -75,16 +76,16 @@ class TicTacToe{
         this.fullBoard = true;
         return true;
     }
-    end_game(){
+    disableBoard(){
         this.is_game_active = false;
-        this.board.style.opacity = 0.2;
+        this.game.classList.add("complete")
     }
     isBoardComplete(char){
         if(this.is_game_active){
             const winner = this.horizontal_check() || this.vertical_check() || this.diagonal_check();
             const full_board = this.is_full();
             if(winner || full_board){
-                this.end_game();
+                this.disableBoard();
                 this.modalMsg.innerHTML = winner ? `${char} WINS!!` : "DRAW!!";
                 this.modal.style.display = "block";
                 this.winner = winner ? char : "D";
@@ -116,7 +117,7 @@ class SuperTicTacToe{
         this.board7 = new TicTacToe("game6");
         this.board8 = new TicTacToe("game7");
         this.board9 = new TicTacToe("game8");
-        this.superBoard = new TicTacToe("game9");        
+        this.superBoard = new TicTacToe("game9");     
         this.boards = [
             this.board1,
             this.board2,
@@ -129,14 +130,20 @@ class SuperTicTacToe{
             this.board9,
             this.superBoard
                         ]
+        this.bigModal = document.querySelector("#superboardmodal");
+        this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
         this.initializeGame();
     }
     initializeGame(){
+        this.bigModal.style.display = "none";
+        this.bigModalMsg.innerHTML = "";
         this.whose_move = "X";
-        this.currentBoard = this.board1;
+        let randomInt = Math.floor(Math.random() * 9);
+        this.currentBoard = this.boards[randomInt];
+        this.unHighlightBoards()
         this.currentBoard.highlightBoard();
         this.validBoardIds = [
-            this.board1.board.id
+            this.currentBoard.board.id
         ];
         const self = this;
         this.boards.forEach(function(board){
@@ -190,16 +197,28 @@ class SuperTicTacToe{
                     this.validBoardIds.push(this.currentBoard.board.id);
                     this.currentBoard.highlightBoard();
                 }
+            }else{
+                this.endGame();
             }
         }
+    }
+    endGame(){
+        const self = this;
+        this.boards.forEach(function(board){
+            board.disableBoard();
+            self.bigModalMsg.innerHTML = self.superBoard.modalMsg.innerHTML;
+            self.bigModal.style.display = "block";
+
+        })
     }
 }
 
 //To DO:
 // Add hover event for boards that are done
-// handle win/draw conditions
-// handle move to full board
-// handle play-again button, modal and functionality
-
+// format modal
+// refactor, prettier
+// comment
+//reset bigmodal
 //reset game - unhighlight board, choose random board for start, set move to X
+// handle three draws!!
 game = new SuperTicTacToe();
