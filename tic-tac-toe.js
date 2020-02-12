@@ -31,6 +31,7 @@ class TicTacToe{
             let char2 = this.cells[row+1].innerHTML;
             let char3 = this.cells[row+2].innerHTML;
             if(char1 === char2 && char2 === char3 && char1 !== "" && char1 !== "D"){
+                this.winner = char1;
                 return true;
             }
         }
@@ -43,6 +44,7 @@ class TicTacToe{
             let char3 = this.cells[i+6].innerHTML;
 
             if(char1 === char2 && char2 === char3 && char1 !== "" && char1 !== "D"){
+                this.winner = char1;
                 return true;
             }
         }
@@ -57,9 +59,11 @@ class TicTacToe{
         let ll_corner = this.cells[6].innerHTML;
 
         if(lu_corner === middle && middle === rl_corner && lu_corner != "" && lu_corner !== "D"){
+            this.winner = lu_corner;
             return true
         }
-        if(ru_corner === middle && middle === ll_corner && ru_corner != ""){
+        if(ru_corner === middle && middle === ll_corner && ru_corner != "" && ru_corner !== "D"){
+            this.winner = ru_corner;
             return true;
         }
         return false;
@@ -77,15 +81,16 @@ class TicTacToe{
         this.isGameActive = false;
         this.game.classList.add("complete")
     }
-    isGameOver(char){
+    isGameOver(){
         if(this.isGameActive){
             const hasWinner = this.checkRows() || this.checkCols() || this.checkDiagonal();
             const fullBoard = this.isFull();
             if(hasWinner || fullBoard){
-                this.disableBoard();
-                this.modalMsg.innerHTML = hasWinner ? `${char} WINS!!` : "DRAW!!";
+                this.modalMsg.innerHTML = hasWinner ? `${this.winner} WINS!! 🎉` : "DRAW!!";
                 this.modal.style.display = "block";
-                this.winner = hasWinner ? char : "D";
+                if(!this.winner){
+                    this.winner = "D";
+                }
                 return true;
             }
             return false;
@@ -156,7 +161,7 @@ class SuperTicTacToe{
             board.cells.forEach((cell) => {
                 cell.addEventListener('click', () => {
                     if(this.superBoard.isGameActive){
-                        this.move(cell);
+                        this.handleGameMove(cell);
                     }
                 })
             })
@@ -173,32 +178,40 @@ class SuperTicTacToe{
             this.initializeGame();
         })
     }
-    move(cell){
+    placeCharOnSuperBoard(clickedCellId){
+        let superBoardCoord = this.superBoard.board.querySelector(`td#cell${clickedCellId}`);
+        this.superBoard.placeChar(superBoardCoord, this.currentBoard.winner);
+        if(this.superBoard.isGameOver()){
+            this.superBoard.disableBoard();
+            this.playAgainBtn.style.display = "block";
+        }
+    }
+    updateBoardState(nextBoardId){
+        this.currentMove = this.currentMove === 'X' ?  'O' : 'X';
+        this.currentBoard = this.boards[nextBoardId];
+        this.validBoardIds = []
+        if(this.currentBoard.isFull()){
+            this.boards.forEach((board) => {
+                this.validBoardIds.push(board.board.id)
+                board.highlightBoard();
+            })
+        }else{
+            this.validBoardIds.push(this.currentBoard.board.id);
+            this.currentBoard.highlightBoard();
+        }
+    }
+    handleGameMove(cell){
         let clickedBoardId = cell.dataset["board"];
         if(this.validBoardIds.includes(clickedBoardId) && cell.innerHTML === ""){
             this.currentBoard = this.boards[clickedBoardId];
             this.currentBoard.placeChar(cell, this.currentMove);
-            if(this.currentBoard.isGameOver(this.currentMove)){
-                let superBoardCoord = this.superBoard.board.querySelector(`td#cell${cell.dataset["board"]}`);
-                this.superBoard.placeChar(superBoardCoord, this.currentBoard.winner);
-                if(this.superBoard.isGameOver(this.currentBoard.winner)){
-                    this.playAgainBtn.style.display = "block";
-                }
+            if(this.currentBoard.isGameOver()){
+                this.currentBoard.disableBoard();
+                this.placeCharOnSuperBoard(clickedBoardId);
             }
             this.unHighlightBoards()
             if(this.superBoard.isGameActive){
-                this.currentMove = this.currentMove === 'X' ?  'O' : 'X';
-                this.currentBoard = this.boards[cell.dataset["coord"]];
-                this.validBoardIds = []
-                if(this.currentBoard.isFull()){
-                    this.boards.forEach((board) => {
-                        this.validBoardIds.push(board.board.id)
-                        board.highlightBoard();
-                    })
-                }else{
-                    this.validBoardIds.push(this.currentBoard.board.id);
-                    this.currentBoard.highlightBoard();
-                }
+                this.updateBoardState(cell.dataset["coord"])
             }else{
                 this.endGame();
             }
@@ -218,6 +231,6 @@ class SuperTicTacToe{
 // set opacity to 1 when board is active
 // refactor, prettier
 // comment
-//reset game - unhighlight board, choose random board for start, set move to X
-// handle three draws!!
+// ability to x out final modal
+
 game = new SuperTicTacToe();
