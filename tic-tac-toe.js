@@ -19,6 +19,8 @@ class TicTacToe{
         })
         this.game.classList.remove("complete")
         this.modal.style.display = "none";
+        this.board.classList.remove("active");
+        this.modalMsg.innerHTML = "";
     }
     placeChar(cell, char){
         if(cell.innerHTML === ""){
@@ -100,11 +102,15 @@ class TicTacToe{
         this.cells.forEach(function(cell){
             cell.style["background-color"] = "yellow";
         })
+        this.board.classList.add("active");
+        this.modal.style.display = "none";
     }
     unHighlightBoard(){
         this.cells.forEach(function(cell){
             cell.style["background-color"] = "white";
         })
+        this.board.classList.remove("active");
+        this.modal.style.display = "block";
     }
 }
 

@@ -71,3 +71,7 @@ table td{
 .wrapper.complete:hover .board{
     opacity: 1;
 }
+
+.wrapper.complete .board.active{
+    opacity: 1;
+}
