@@ -10,6 +10,10 @@
     border: 3px solid;
 }
 
+#play-again{
+    margin-top: 10px;
+}
+
 table td{
     border-left: 3px solid;
     text-align: center;
@@ -33,16 +37,18 @@ table td{
 }
 
 #superboardmodal{
-    width: 605px;
-    height: 605px;
+    width: 610px;
+    height: 610px;
     position: absolute;
     z-index: 20;
     text-align: center;
 }
 
 #superboardmodal .result_msg{
-    font-size: 75px;
-    margin-top: 40%;
+    font-size: 95px;
+    margin-top: 30%;
+    background-color: lightblue;
+    font-family: arial;
 }
 
 .wrapper{

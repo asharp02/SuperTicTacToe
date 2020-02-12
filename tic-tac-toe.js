@@ -9,24 +9,23 @@ class TicTacToe{
     }
 
     initializeBoard(){
-        this.is_game_active = true;
+        this.isGameActive = true;
         this.winner = "";
         this.fullBoard = false;
     }
-    clear_board(){
-        this.cells.forEach(function(value){
-            value.innerHTML = "";
+    clearBoard(){
+        this.cells.forEach(function(cell){
+            cell.innerHTML = "";
         })
         this.game.classList.remove("complete")
         this.modal.style.display = "none";
     }
-    place_char(cell, char){
+    placeChar(cell, char){
         if(cell.innerHTML === ""){
             cell.innerHTML = char;
         }
-
     }
-    horizontal_check(){
+    checkRows(){
         for(let row=0; row < 9; row+=3){
             let char1 = this.cells[row].innerHTML;
             let char2 = this.cells[row+1].innerHTML;
@@ -37,7 +36,7 @@ class TicTacToe{
         }
         return false;
     }
-    vertical_check(){
+    checkCols(){
         for(let i=0; i < 3; i++){
             let char1 = this.cells[i].innerHTML;
             let char2 = this.cells[i+3].innerHTML;
@@ -50,7 +49,7 @@ class TicTacToe{
         return false;
 
     }
-    diagonal_check(){
+    checkDiagonal(){
         let lu_corner = this.cells[0].innerHTML;
         let middle = this.cells[4].innerHTML;
         let rl_corner = this.cells[8].innerHTML;
@@ -65,10 +64,8 @@ class TicTacToe{
         }
         return false;
     }
-    is_full(){
-        //CHEATING WITH HARDCODED LENGTH!!!
+    isFull(){
         for(let i=0; i < 9; i++){
-            // console.log(this.cells[i].innerHTML);
             if(this.cells[i].innerHTML === ""){
                 return false;
             }
@@ -77,18 +74,18 @@ class TicTacToe{
         return true;
     }
     disableBoard(){
-        this.is_game_active = false;
+        this.isGameActive = false;
         this.game.classList.add("complete")
     }
-    isBoardComplete(char){
-        if(this.is_game_active){
-            const winner = this.horizontal_check() || this.vertical_check() || this.diagonal_check();
-            const full_board = this.is_full();
-            if(winner || full_board){
+    isGameOver(char){
+        if(this.isGameActive){
+            const hasWinner = this.checkRows() || this.checkCols() || this.checkDiagonal();
+            const fullBoard = this.isFull();
+            if(hasWinner || fullBoard){
                 this.disableBoard();
-                this.modalMsg.innerHTML = winner ? `${char} WINS!!` : "DRAW!!";
+                this.modalMsg.innerHTML = hasWinner ? `${char} WINS!!` : "DRAW!!";
                 this.modal.style.display = "block";
-                this.winner = winner ? char : "D";
+                this.winner = hasWinner ? char : "D";
                 return true;
             }
             return false;
@@ -129,68 +126,73 @@ class SuperTicTacToe{
             this.board8,
             this.board9,
             this.superBoard
-                        ]
+        ]
         this.bigModal = document.querySelector("#superboardmodal");
         this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
+        this.playAgainBtn = document.querySelector("#play-again");
         this.initializeGame();
     }
     initializeGame(){
         this.bigModal.style.display = "none";
         this.bigModalMsg.innerHTML = "";
-        this.whose_move = "X";
-        let randomInt = Math.floor(Math.random() * 9);
-        this.currentBoard = this.boards[randomInt];
-        this.unHighlightBoards()
-        this.currentBoard.highlightBoard();
+        this.currentMove = "X";
+        let randomCoord = Math.floor(Math.random() * 9);
+        this.currentBoard = this.boards[randomCoord];
         this.validBoardIds = [
             this.currentBoard.board.id
         ];
-        const self = this;
-        this.boards.forEach(function(board){
-            board.cells.forEach(function(cell){
-                cell.addEventListener('click', function(){
-                    if(self.superBoard.is_game_active){
-                        self.move(cell);
-                    }
-                })
-            })
-        });
-        this.playAgainBtn = document.querySelector("#play-again");
-        this.playAgainBtn.addEventListener("click", function(){
-            self.boards.forEach(function(board){
-                board.clear_board();
-                board.initializeBoard();
-            })
-            self.playAgainBtn.style.display = "none";
-            self.initializeGame();
-        })
+        this.unHighlightBoards()
+        this.currentBoard.highlightBoard();
+        this.handleBoardClick();
+        this.handlePlayAgainBtn();
     }
     unHighlightBoards(){
         this.boards.forEach(function(board){
             board.unHighlightBoard();
         })
     }
+    handleBoardClick(){
+        this.boards.forEach((board) => {
+            board.cells.forEach((cell) => {
+                cell.addEventListener('click', () => {
+                    if(this.superBoard.isGameActive){
+                        this.move(cell);
+                    }
+                })
+            })
+        });
+    }
+
+    handlePlayAgainBtn(){
+        this.playAgainBtn.addEventListener("click", () => {
+            this.boards.forEach((board) => {
+                board.clearBoard();
+                board.initializeBoard();
+            })
+            this.playAgainBtn.style.display = "none";
+            this.initializeGame();
+        })
+    }
     move(cell){
         let clickedBoardId = cell.dataset["board"];
         if(this.validBoardIds.includes(clickedBoardId) && cell.innerHTML === ""){
             this.currentBoard = this.boards[clickedBoardId];
-            this.currentBoard.place_char(cell, this.whose_move);
-            if(this.currentBoard.isBoardComplete(this.whose_move)){
+            this.currentBoard.placeChar(cell, this.currentMove);
+            if(this.currentBoard.isGameOver(this.currentMove)){
                 let superBoardCoord = this.superBoard.board.querySelector(`td#cell${cell.dataset["board"]}`);
-                this.superBoard.place_char(superBoardCoord, this.currentBoard.winner);
-                if(this.superBoard.isBoardComplete(this.currentBoard.winner)){
+                this.superBoard.placeChar(superBoardCoord, this.currentBoard.winner);
+                if(this.superBoard.isGameOver(this.currentBoard.winner)){
                     this.playAgainBtn.style.display = "block";
                 }
             }
             this.unHighlightBoards()
-            if(this.superBoard.is_game_active){
-                this.whose_move = this.whose_move === 'X' ?  'O' : 'X';
+            if(this.superBoard.isGameActive){
+                this.currentMove = this.currentMove === 'X' ?  'O' : 'X';
                 this.currentBoard = this.boards[cell.dataset["coord"]];
                 this.validBoardIds = []
-                if(this.currentBoard.is_full()){
-                    const self = this;
-                    this.boards.forEach(function(board){
-                        self.validBoardIds.push(board.board.id)
+                if(this.currentBoard.isFull()){
+                    this.boards.forEach((board) => {
+                        this.validBoardIds.push(board.board.id)
                         board.highlightBoard();
                     })
                 }else{
@@ -203,22 +205,19 @@ class SuperTicTacToe{
         }
     }
     endGame(){
-        const self = this;
-        this.boards.forEach(function(board){
+        this.boards.forEach((board) => {
             board.disableBoard();
-            self.bigModalMsg.innerHTML = self.superBoard.modalMsg.innerHTML;
-            self.bigModal.style.display = "block";
+            this.bigModalMsg.innerHTML = this.superBoard.modalMsg.innerHTML;
+            this.bigModal.style.display = "block";
 
         })
     }
 }
 
 //To DO:
-// Add hover event for boards that are done
-// format modal
+// set opacity to 1 when board is active
 // refactor, prettier
 // comment
-//reset bigmodal
 //reset game - unhighlight board, choose random board for start, set move to X
 // handle three draws!!
 game = new SuperTicTacToe();
