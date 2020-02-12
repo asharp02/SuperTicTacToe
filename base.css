@@ -12,6 +12,9 @@
 
 #play-again{
     margin-top: 10px;
+    background-color: white;
+    color: green;
+    border: 2px solid green;
 }
 
 table td{

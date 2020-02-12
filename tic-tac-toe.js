@@ -234,9 +234,9 @@ class SuperTicTacToe{
 }
 
 //To DO:
-// set opacity to 1 when board is active
 // refactor, prettier
 // comment
 // ability to x out final modal
+// button styling
 
 game = new SuperTicTacToe();
