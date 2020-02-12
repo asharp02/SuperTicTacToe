@@ -99,16 +99,10 @@ class TicTacToe{
         }
     }
     highlightBoard(){
-        this.cells.forEach(function(cell){
-            cell.style["background-color"] = "yellow";
-        })
         this.board.classList.add("active");
         this.modal.style.display = "none";
     }
     unHighlightBoard(){
-        this.cells.forEach(function(cell){
-            cell.style["background-color"] = "white";
-        })
         this.board.classList.remove("active");
         this.modal.style.display = "block";
     }
@@ -237,6 +231,4 @@ class SuperTicTacToe{
 // refactor, prettier
 // comment
 // ability to x out final modal
-// button styling
-
 game = new SuperTicTacToe();
