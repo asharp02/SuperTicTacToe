@@ -222,8 +222,11 @@ class SuperTicTacToe{
             board.disableBoard();
             this.bigModalMsg.innerHTML = this.superBoard.modalMsg.innerHTML;
             this.bigModal.style.display = "block";
-
-        })
+        });
+        const exitButton = this.bigModal.querySelector("button");
+        exitButton.addEventListener("click", () => {
+            this.bigModal.style.display = "none";
+        });
     }
 }
 

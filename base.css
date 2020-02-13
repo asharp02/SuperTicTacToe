@@ -65,6 +65,14 @@ table td{
     font-family: arial;
 }
 
+#superboardmodal button{
+    position: absolute;
+    margin-top: 30%;
+    margin-left: 46%;
+    font-size: 13px;
+    font-weight: bold;
+}
+
 .wrapper{
     display: inline-block;
     text-align: center;
