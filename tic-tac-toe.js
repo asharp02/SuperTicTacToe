@@ -3,11 +3,11 @@
  * This file contains an implementation of Super Tic Tac Toe. My implementation
  * includes two class definitions: "Tic Tac Toe" and "Super Tic Tac Toe". The
  * "Tic Tac Toe" class contains an implementation for a single board. "Super Tic Tac Toe"
- * contains implementation of overall Tic Tac Toe game.
+ * contains implementation of overall/global Tic Tac Toe game.
  *
- * Sub board definition: Any of the 9 boards(each with its own game of Tic Tac Toe)
- *  that make up the superboard
- * Superboard definition: Made up of 9 sub boards, the result of any sub board
+ * Sub board(local boards) definition: Any of the 9 boards
+ * (each with its own game of Tic Tac Toe) that make up the superboard
+ * Superboard (global board) definition: Made up of 9 sub boards, the result of any sub board
  * will be marked on the superboard (X, O or D in case of draw)
  *
  *
