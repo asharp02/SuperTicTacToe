@@ -7,10 +7,10 @@ out of the nine Tic Tac Toe boards and player X goes first. Each player may only
 Once a player has made their move, the next valid board will be highlighted. This board is determined by the previous players' 
 move.
 Here's an example:
-![Start of Game](/images/move0.png)
+![Start of Game](/images/Move0.png)
 The highlighted board is currently in the top right corner...
-![Player X makes first move](/images/move1.png)
-![Player O makes second move](/images/move2.png)
+![Player X makes first move](/images/Move1.png)
+![Player O makes second move](/images/Move2.png)
 
 
 The game ends when the global Tic Tac Toe board game is complete (When either player has won or there is a draw). 
