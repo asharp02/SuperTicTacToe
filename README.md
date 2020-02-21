@@ -7,9 +7,11 @@ out of the nine Tic Tac Toe boards and player X goes first. Each player may only
 Once a player has made their move, the next valid board will be highlighted. This board is determined by the previous players' 
 move.
 Here's an example:
+
 ![Start of Game](/images/Move0.png)
-The highlighted board is currently in the top right corner...
+
 ![Player X makes first move](/images/Move1.png)
+
 ![Player O makes second move](/images/Move2.png)
 
 
