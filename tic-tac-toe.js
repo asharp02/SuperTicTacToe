@@ -258,8 +258,10 @@ SuperTicTacToe.prototype.updateSuperBoardState = function(nextBoardId) {
   // Handles edge case where player selects a full board
   if (this.currentBoard.isFull()) {
     this.boards.forEach(board => {
-      this.currentBoardIds.push(board.board.id);
-      board.highlightBoard();
+      if (!board.isFull()){
+        this.currentBoardIds.push(board.board.id);
+        board.highlightBoard();
+      }
     });
   } else {
     this.currentBoardIds.push(this.currentBoard.board.id);
