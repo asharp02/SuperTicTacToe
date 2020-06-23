@@ -7,10 +7,22 @@ out of the nine Tic Tac Toe boards and player X goes first. Each player may only
 Once a player has made their move, the next valid board will be highlighted. This board is determined by the previous players' 
 move.
 Here's an example:
-![Start of Game](/images/move0.png)
-The highlighted board is currently in the top right corner...
-![Player X makes first move](/images/move1.png)
-![Player O makes second move](/images/move2.png)
+
+![Start of Game](/images/Move0.png)
+
+![Player X makes first move](/images/Move1.png)
+
+![Player O makes second move](/images/Move2.png)
 
 
-The game ends when the global Tic Tac Toe board game is complete (When either player has won or there is a draw). 
+**First image:** The upper right board has been selected randomly as the first valid board. Player X always goes first. 
+
+**Second image:** Player X moved to the upper left square within the first board. Player O can now select a square within the upper left board.
+
+**Third image:** Player O moved to the middle square. Player X can now select a square within the middle board. 
+
+The game ends when the global Tic Tac Toe board game is complete (When either player has won or there is a draw).
+
+In the case where a player is sent to a board that is already won, you must play there if there is an empty square.
+
+In the case where a player is sent to a full board, the player can choose anywhere on the board to move.
