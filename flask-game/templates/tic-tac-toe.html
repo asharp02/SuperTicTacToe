@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" filename/>
     <script src="{{url_for('static', filename='js/tic-tac-toe.js')}}" defer></script>
     <h3>Welcome {{ name }}, Game Code: {{ code }}</h3>
+    <input id="name-input" data-name="{{ name }}" style="display:none">
     <p id="waiting-msg">Waiting for opponent</p>
     <div id="superboardmodal" style="display:none">
         <button>X</button>       

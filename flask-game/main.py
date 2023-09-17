@@ -43,7 +43,7 @@ def home():
         room = code
         if create != False:
             room = generate_unique_code(4)
-            rooms[room] = {"members": 0, "messages": []}
+            rooms[room] = {"users": {}, "messages": []}
         elif code not in rooms:
             return render_template(
                 "home.html", error="Room does not exist.", code=code, name=name
@@ -62,7 +62,7 @@ def game():
     name = session.get("name")
     if room == None or name == None or room not in rooms:
         return redirect(url_for("home"))
-    if rooms[room]["members"] == 2:
+    if len(rooms[room]["users"]) == 2 and name not in rooms[room]["users"]:
         return redirect(url_for("home"))
     return render_template(
         "tic-tac-toe.html", code=room, name=name, messages=rooms[room]["messages"]
@@ -81,11 +81,27 @@ def connect(auth):
         return
     join_room(room)
 
-    player_starts = False
-    if rooms[room]["members"] == 0:
-        player_starts = True
-    socketio.emit("assign_turn", {"myTurn": player_starts}, to=room)
-    rooms[room]["members"] += 1
+    if len(rooms[room]["users"]) == 2:
+        return
+    if not rooms[room]["users"]:
+        rooms[room]["users"] = {name: "X"}
+        socketio.emit(
+            "init_game",
+            {"room": rooms[room], "playerOne": True, "startCoord": None},
+            to=room,
+        )
+    elif len(rooms[room]["users"]) == 1:
+        rooms[room]["users"][name] = "O"
+        socketio.emit(
+            "init_game",
+            {
+                "room": rooms[room],
+                "playerOne": False,
+                "startCoord": rooms[room]["startCoord"],
+            },
+            to=room,
+        )
+
     print(f"{name} joined room {room}")
 
 
@@ -101,6 +117,13 @@ def disconnect():
             del rooms[room]
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
+
+
+@socketio.on("start_coord")
+def startingCoord(data):
+    room = session.get("room")
+    print(data)
+    rooms[room]["startCoord"] = data
 
 
 @socketio.on("message")

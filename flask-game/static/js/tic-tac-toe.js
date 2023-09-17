@@ -152,7 +152,7 @@ TicTacToe.prototype.unHighlightBoard = function () {
  * an overall game (Game that takes place on superboard).
  */
 class SuperTicTacToe {
-  constructor(myTurn) {
+  constructor(randomCoord) {
     this.board0 = new TicTacToe("game0");
     this.board1 = new TicTacToe("game1");
     this.board2 = new TicTacToe("game2");
@@ -178,8 +178,8 @@ class SuperTicTacToe {
     this.bigModal = document.querySelector("#superboardmodal");
     this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
     this.playAgainBtn = document.querySelector("#play-again");
+    this.startingCoord = randomCoord;
     this.initializeGame();
-    this.myTurn = myTurn;
   }
 }
 
@@ -187,11 +187,9 @@ SuperTicTacToe.prototype.initializeGame = function () {
   this.bigModal.style.display = "none";
   this.bigModalMsg.innerHTML = "";
   this.currentMove = "X";
-  // Select random coordinate within range of 0-8 as first active board
-  let randomCoord = Math.floor(Math.random() * 9);
 
   // Represents current sub board where a player can make a valid move
-  this.currentBoard = this.boards[randomCoord];
+  this.currentBoard = this.boards[this.startingCoord];
 
   // Represents current sub board ids where a player can make a valid move
   this.currentBoardIds = [this.currentBoard.board.id];
@@ -310,7 +308,21 @@ SuperTicTacToe.prototype.endGame = function () {
 let socketio = io();
 
 let myTurn;
+let randomCoord;
 
-socketio.on("assign_turn", (msg) => {
-  game = new SuperTicTacToe(msg.myTurn);
+socketio.on("init_game", (msg) => {
+  let roomData = msg.room;
+  console.log(roomData);
+  let isFirstPlayer = msg.playerOne;
+  let nameInput = document.querySelector("#name-input");
+  let name = nameInput.dataset.name;
+  if (isFirstPlayer) {
+    // Select random coordinate within range of 0-8 as first active board
+    randomCoord = Math.floor(Math.random() * 9);
+    socketio.emit("start_coord", randomCoord);
+  } else {
+    randomCoord = roomData["startCoord"];
+  }
+  const playerChar = roomData["users"][name];
+  game = new SuperTicTacToe(randomCoord);
 });
