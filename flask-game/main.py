@@ -126,6 +126,18 @@ def startingCoord(data):
     rooms[room]["startCoord"] = data
 
 
+@socketio.on("gameMove")
+def gameMove(board_id, cell_id):
+    room = session.get("room")
+    user = session.get("name")
+    socketio.emit(
+        "update_board",
+        {"currentPlayer": user, "boardId": board_id, "cellCoord": cell_id},
+        to=room,
+    )
+    print(board_id, cell_id)
+
+
 @socketio.on("message")
 def message(data):
     room = session.get("room")

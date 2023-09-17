@@ -152,7 +152,7 @@ TicTacToe.prototype.unHighlightBoard = function () {
  * an overall game (Game that takes place on superboard).
  */
 class SuperTicTacToe {
-  constructor(randomCoord) {
+  constructor(randomCoord, myChar) {
     this.board0 = new TicTacToe("game0");
     this.board1 = new TicTacToe("game1");
     this.board2 = new TicTacToe("game2");
@@ -179,6 +179,7 @@ class SuperTicTacToe {
     this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
     this.playAgainBtn = document.querySelector("#play-again");
     this.startingCoord = randomCoord;
+    this.myTurn = myChar == "X";
     this.initializeGame();
   }
 }
@@ -279,6 +280,7 @@ SuperTicTacToe.prototype.updateSuperBoardState = function (nextBoardId) {
 SuperTicTacToe.prototype.handleGameMove = function (cell) {
   let clickedBoardId = cell.dataset["board"];
   if (this.currentBoardIds.includes(clickedBoardId) && cell.innerHTML === "") {
+    socketio.emit("gameMove", clickedBoardId, cell.dataset.coord);
     this.currentBoard = this.boards[clickedBoardId];
     this.currentBoard.placeChar(cell, this.currentMove);
     if (this.currentBoard.isGameOver()) {
@@ -309,13 +311,13 @@ let socketio = io();
 
 let myTurn;
 let randomCoord;
+let nameInput = document.querySelector("#name-input");
+let player = nameInput.dataset.name;
 
 socketio.on("init_game", (msg) => {
   let roomData = msg.room;
   console.log(roomData);
   let isFirstPlayer = msg.playerOne;
-  let nameInput = document.querySelector("#name-input");
-  let name = nameInput.dataset.name;
   if (isFirstPlayer) {
     // Select random coordinate within range of 0-8 as first active board
     randomCoord = Math.floor(Math.random() * 9);
@@ -323,6 +325,15 @@ socketio.on("init_game", (msg) => {
   } else {
     randomCoord = roomData["startCoord"];
   }
-  const playerChar = roomData["users"][name];
-  game = new SuperTicTacToe(randomCoord);
+  const playerChar = roomData["users"][player];
+  game = new SuperTicTacToe(randomCoord, playerChar);
+});
+
+socketio.on("update_board", (msg) => {
+  if (player !== msg.currentPlayer) {
+    let cell = document.querySelector(
+      `[data-board="${msg.boardId}"][data-coord="${msg.cellCoord}"]`
+    );
+    cell.click();
+  }
 });
