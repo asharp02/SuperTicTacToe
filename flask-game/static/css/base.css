@@ -1,3 +1,7 @@
+.content {
+    display: block;
+}
+
 .board{
     width: 200px;
     height: 200px;

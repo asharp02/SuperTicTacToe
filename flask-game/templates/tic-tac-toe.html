@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>
-        Tic Tac Toe EXTREME
-    </title>
-    <link rel="stylesheet" href="base.css">
-
-</head>
+{% extends 'base.html' %}
+{% block content %}
 <body>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" filename/>
+    <script src="{{url_for('static', filename='js/tic-tac-toe.js')}}" defer></script>
+    <h3>Welcome {{ name }}, Game Code: {{ code }}</h3>
+    <p id="waiting-msg">Waiting for opponent</p>
     <div id="superboardmodal" style="display:none">
         <button>X</button>       
         <p class="result_msg"></p>
@@ -241,9 +236,8 @@
                 </table>
             </div>
     <button id="play-again" style="display:none">Play Again</button>
-
-    <script src="./tic-tac-toe.js"></script>
 </body>
 
-
 </html>
+
+{% endblock %}
