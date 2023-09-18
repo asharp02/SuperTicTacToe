@@ -109,3 +109,11 @@ table td{
 .board.active td:hover{
     background-color: lightyellow;
 }
+
+.board.active.not-my-turn td{
+    background-color: #d44147;
+}
+
+.board.active.not-my-turn td:hover{
+    background-color: #d44147;
+}
