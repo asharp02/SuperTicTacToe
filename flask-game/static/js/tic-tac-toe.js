@@ -46,9 +46,18 @@ TicTacToe.prototype.clearBoard = function () {
   this.board.classList.remove("not-my-turn");
   this.modalMsg.innerHTML = "";
 };
-TicTacToe.prototype.placeChar = function (cell, char) {
-  if (cell.innerHTML === "") {
-    cell.innerHTML = char;
+TicTacToe.prototype.placeChar = function (cell, char, clicked) {
+  if (cell.classList.contains("finalized")) {
+    return;
+  }
+  if (clicked) {
+    cell.classList.add("finalized");
+  }
+  cell.innerHTML = char;
+};
+TicTacToe.prototype.removeChar = function (cell) {
+  if (!cell.classList.contains("finalized")) {
+    cell.innerHTML = "";
   }
 };
 TicTacToe.prototype.checkRows = function () {
@@ -147,6 +156,7 @@ TicTacToe.prototype.highlightBoard = function (myTurn) {
   }
   this.modal.style.display = "none";
 };
+
 TicTacToe.prototype.unHighlightBoard = function () {
   this.board.classList.remove("active");
   this.board.classList.remove("not-my-turn");
@@ -202,7 +212,7 @@ SuperTicTacToe.prototype.initializeGame = function () {
   this.currentBoardIds = [this.currentBoard.board.id];
   this.unHighlightBoards();
   this.currentBoard.highlightBoard(this.myTurn);
-  this.handleBoardClick();
+  this.handleBoardEvents();
   this.handlePlayAgainBtn();
 };
 SuperTicTacToe.prototype.unHighlightBoards = function () {
@@ -210,7 +220,8 @@ SuperTicTacToe.prototype.unHighlightBoards = function () {
     board.unHighlightBoard();
   });
 };
-SuperTicTacToe.prototype.handleBoardClick = function () {
+
+SuperTicTacToe.prototype.handleBoardEvents = function () {
   this.boards.forEach((board) => {
     board.cells.forEach((cell) => {
       cell.addEventListener("click", () => {
@@ -218,6 +229,16 @@ SuperTicTacToe.prototype.handleBoardClick = function () {
         if (this.superBoard.isGameActive && this.myTurn) {
           this.handleGameMove(cell);
           socketio.emit("gameMove", cell.dataset.board, cell.dataset.coord);
+        }
+      });
+      cell.addEventListener("mouseover", () => {
+        if (this.superBoard.isGameActive && this.myTurn) {
+          this.currentBoard.placeChar(cell, this.currentMove, false);
+        }
+      });
+      cell.addEventListener("mouseout", () => {
+        if (this.superBoard.isGameActive && this.myTurn) {
+          this.currentBoard.removeChar(cell);
         }
       });
     });
@@ -287,9 +308,12 @@ SuperTicTacToe.prototype.updateSuperBoardState = function (nextBoardId) {
  */
 SuperTicTacToe.prototype.handleGameMove = function (cell) {
   let clickedBoardId = cell.dataset["board"];
-  if (this.currentBoardIds.includes(clickedBoardId) && cell.innerHTML === "") {
+  if (
+    this.currentBoardIds.includes(clickedBoardId) &&
+    !cell.classList.contains("finalized")
+  ) {
     this.currentBoard = this.boards[clickedBoardId];
-    this.currentBoard.placeChar(cell, this.currentMove);
+    this.currentBoard.placeChar(cell, this.currentMove, true);
     if (this.currentBoard.isGameOver()) {
       this.currentBoard.disableBoard();
       this.placeCharOnSuperBoard(clickedBoardId);
