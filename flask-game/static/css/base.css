@@ -104,6 +104,7 @@ table td{
 
 .board.active td{
     background-color: yellow;
+    cursor: default;
 }
 
 .board.active td:hover{
