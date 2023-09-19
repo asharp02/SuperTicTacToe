@@ -1,11 +1,20 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
+from flask_session import Session
+from flask_cors import CORS
 import random
 from string import ascii_uppercase
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "khklsdhfajksdf"
-socketio = SocketIO(app)
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = "True"
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["SERVER_NAME"] = "superttt.adriansh.com"
+CORS(app)
+socketio = SocketIO(app, manage_session=False)
+
+
 
 
 rooms = {}
