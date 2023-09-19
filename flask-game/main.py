@@ -5,16 +5,13 @@ from flask_cors import CORS
 import random
 from string import ascii_uppercase
 
+from config import Config
+
+
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "khklsdhfajksdf"
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] = "True"
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SERVER_NAME"] = "superttt.adriansh.com"
+app.config.from_object(Config)
 CORS(app)
 socketio = SocketIO(app, manage_session=False)
-
-
 
 
 rooms = {}
