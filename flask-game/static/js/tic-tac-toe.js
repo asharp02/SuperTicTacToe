@@ -25,7 +25,6 @@ class TicTacToe {
     this.game = document.querySelector(`#${id}`);
     this.cells = document.querySelectorAll(`#${id} td`);
     this.modal = document.querySelector(`#${id} .modal`);
-    this.modalMsg = document.querySelector(`#${id} .modal .result_msg`);
     this.initializeBoard();
   }
 }
@@ -44,7 +43,7 @@ TicTacToe.prototype.clearBoard = function () {
   this.modal.style.display = "none";
   this.board.classList.remove("active");
   this.board.classList.remove("not-my-turn");
-  this.modalMsg.innerHTML = "";
+  this.modal.innerHTML = "";
 };
 TicTacToe.prototype.placeChar = function (cell, char, clicked) {
   if (cell.classList.contains("finalized")) {
@@ -135,9 +134,7 @@ TicTacToe.prototype.isGameOver = function () {
       this.checkRows() || this.checkCols() || this.checkDiagonal();
     const fullBoard = this.isFull();
     if (hasWinner || fullBoard) {
-      this.modalMsg.innerHTML = hasWinner
-        ? `${this.winner} WINS!! 🎉`
-        : "DRAW!!";
+      this.modal.innerHTML = hasWinner ? `${this.winner}` : "D";
       this.modal.style.display = "block";
 
       // Required for superboard in the case of a draw
@@ -192,7 +189,6 @@ class SuperTicTacToe {
       this.superBoard,
     ];
     this.bigModal = document.querySelector("#superboardmodal");
-    this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
     this.playAgainBtn = document.querySelector("#play-again");
     this.startingCoord = randomCoord;
     this.myTurn = myChar == "X";
@@ -202,7 +198,7 @@ class SuperTicTacToe {
 
 SuperTicTacToe.prototype.initializeGame = function () {
   this.bigModal.style.display = "none";
-  this.bigModalMsg.innerHTML = "";
+  this.bigModal = "";
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
@@ -337,7 +333,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    this.bigModalMsg.innerHTML = this.superBoard.modalMsg.innerHTML;
+    this.bigModal.innerHTML = this.superBoard.modal.innerHTML;
     this.bigModal.style.display = "block";
   });
   const exitButton = this.bigModal.querySelector("button");
