@@ -232,12 +232,20 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
         }
       });
       cell.addEventListener("mouseover", () => {
-        if (this.superBoard.isGameActive && this.myTurn) {
+        if (
+          this.superBoard.isGameActive &&
+          this.myTurn &&
+          this.currentBoardIds.includes(cell.dataset["board"])
+        ) {
           this.currentBoard.placeChar(cell, this.currentMove, false);
         }
       });
       cell.addEventListener("mouseout", () => {
-        if (this.superBoard.isGameActive && this.myTurn) {
+        if (
+          this.superBoard.isGameActive &&
+          this.myTurn &&
+          this.currentBoardIds.includes(cell.dataset["board"])
+        ) {
           this.currentBoard.removeChar(cell);
         }
       });
