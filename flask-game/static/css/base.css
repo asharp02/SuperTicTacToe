@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Outfit:wght@400;700&display=swap');
+
 .content {
     display: block;
     margin: auto;
-    width: 50%
+    width: 50%;
 }
 
 .board{
@@ -76,6 +78,7 @@ table td{
     width: 33%;
     height: 33%;
     font-size: 50px;
+    font-family: 'Fredoka', sans-serif;
 }
 
 .modal{
