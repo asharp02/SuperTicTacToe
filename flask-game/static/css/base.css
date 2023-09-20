@@ -1,5 +1,7 @@
 .content {
     display: block;
+    margin: auto;
+    width: 50%
 }
 
 .board{
@@ -8,6 +10,42 @@
     border: 3px solid;
     border-collapse: collapse;
     text-align: center;
+}
+
+.board-row.top table{
+    border-top: none;
+}
+
+.board-row.bottom table{
+    border-bottom: none;
+}
+
+#game0 tr, #game3 tr, #game6 tr{
+    border-left: none;
+}
+
+#game0 td:first-of-type, #game3 td:first-of-type, #game6 td:first-of-type{
+    border-left: none;
+}
+
+#game2 tr, #game5 tr, #game8 tr{
+    border-right: none;
+}
+
+#game2 td:last-of-type, #game5 td:last-of-type, #game8 td:last-of-type{
+    border-right: none;
+}
+
+.board-row table:first-of-type {
+    border-left: none;
+}
+
+.board-row table:last-of-type {
+    border-right: none;
+}
+
+.board-row.bottom table tr:last-of-type {
+    border-bottom: none;
 }
 
 .row {
@@ -78,7 +116,7 @@ table td{
 }
 
 .wrapper{
-    display: inline-block;
+    display: block;
     text-align: center;
     width: 200px;
     height: 200px;
@@ -117,4 +155,12 @@ table td{
 
 .board.active.not-my-turn td:hover{
     background-color: #d44147;
+}
+
+tr.row.top {
+    border-top: none;
+}
+
+.board-row {
+    display: flex;
 }
