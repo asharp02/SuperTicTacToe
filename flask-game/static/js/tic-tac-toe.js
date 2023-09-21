@@ -38,6 +38,7 @@ TicTacToe.prototype.initializeBoard = function () {
 TicTacToe.prototype.clearBoard = function () {
   this.cells.forEach(function (cell) {
     cell.innerHTML = "";
+    cell.classList.remove("finalized");
   });
   this.game.classList.remove("complete");
   this.modal.style.display = "none";
@@ -147,8 +148,6 @@ TicTacToe.prototype.isGameOver = function () {
   }
 };
 TicTacToe.prototype.highlightBoard = function (myTurn) {
-  console.log("calling highlight board");
-  console.log(this.board);
   this.board.classList.add("active");
   if (!myTurn) {
     this.board.classList.add("not-my-turn");
@@ -223,7 +222,6 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
     board.cells.forEach((cell) => {
       let targetBoard = this.boards[cell.dataset["board"]];
       cell.addEventListener("click", () => {
-        console.log(this.myTurn);
         // Only allow sub board game move if superboard game is still active
         if (this.superBoard.isGameActive && this.myTurn) {
           this.handleGameMove(cell);
@@ -253,26 +251,27 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
 };
 
 SuperTicTacToe.prototype.setAllBoardsActive = function () {
-  console.log("setting all boards active");
-  console.log(this.boards);
-  console.log("after");
   this.boards.forEach((board) => {
     if (!board.isFull()) {
-      console.log(board);
       this.currentBoardIds.push(board.board.id);
       board.highlightBoard(this.myTurn);
     }
   });
 };
 
+SuperTicTacToe.prototype.restartGame = function () {
+  this.boards.forEach((board) => {
+    board.clearBoard();
+    board.initializeBoard();
+  });
+  this.playAgainBtn.style.display = "none";
+  this.initializeGame();
+};
+
 SuperTicTacToe.prototype.handlePlayAgainBtn = function () {
   this.playAgainBtn.addEventListener("click", () => {
-    this.boards.forEach((board) => {
-      board.clearBoard();
-      board.initializeBoard();
-    });
-    this.playAgainBtn.style.display = "none";
-    this.initializeGame();
+    socketio.emit("restartGame", player);
+    this.restartGame();
   });
 };
 /**
@@ -345,7 +344,6 @@ SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
     this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
-    console.log(this.bigModal);
     this.bigModal.style.display = "block";
   });
   const exitButton = this.bigModal.querySelector("button");
@@ -358,12 +356,13 @@ let socketio = io();
 let myTurn;
 let nameInput = document.querySelector("#name-input");
 let player = nameInput.dataset.name;
+let playerChar;
 let game;
 
 socketio.on("init_game", (msg) => {
   let roomData = msg.room;
   let isFirstPlayer = msg.room["users"][player] === "X";
-  const playerChar = roomData["users"][player];
+  playerChar = roomData["users"][player];
   if (Object.keys(roomData["users"]).length == 1) {
     game = new SuperTicTacToe(playerChar);
   } else if (!isFirstPlayer) {
@@ -377,5 +376,11 @@ socketio.on("update_board", (msg) => {
       `[data-board="${msg.boardId}"][data-coord="${msg.cellCoord}"]`
     );
     Object.getPrototypeOf(game).handleGameMove.call(game, cell);
+  }
+});
+
+socketio.on("playAgain", (charWhoRestarted) => {
+  if (playerChar !== charWhoRestarted) {
+    game.restartGame();
   }
 });

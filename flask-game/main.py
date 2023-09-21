@@ -120,6 +120,14 @@ def gameMove(board_id, cell_id):
     print(board_id, cell_id)
 
 
+@socketio.on("restartGame")
+def restartGame(charWhoRestarted):
+    room = session.get("room")
+    user = session.get("user")
+
+    socketio.emit("playAgain", charWhoRestarted, to=room)
+
+
 @socketio.on("message")
 def message(data):
     room = session.get("room")
