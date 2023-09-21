@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Outfit:wght@400;700&display=swap');
 
+body {
+    background-color: black;
+    color: white;
+}
 .content {
     display: block;
     margin: auto;
@@ -48,6 +52,32 @@
 
 .board-row.bottom table tr:last-of-type {
     border-bottom: none;
+}
+
+#game1 table, #game4 table, #game7 table {
+    border-left: 5px solid teal;
+    border-right: 5px solid teal;
+}
+
+.mid table{
+    border-top: 5px solid teal;
+    border-bottom: 5px solid teal;
+}
+
+.board-row.top tr:last-of-type td {
+    border-bottom: 5px solid teal;
+}
+
+.board-row.bottom tr:first-of-type td {
+    border-top: 5px solid teal;
+}
+
+#game0 tr, #game3 tr, #game6 tr{
+    border-right: 5px solid teal;
+}
+
+#game2 tr, #game5 tr, #game8 tr{
+    border-left: 5px solid teal;
 }
 
 .row {
@@ -149,12 +179,12 @@ table td{
 }
 
 .board.active td{
-    background-color: yellow;
+    background-color: #ffde00;
     cursor: default;
 }
 
-.board.active td:hover{
-    background-color: lightyellow;
+.board.active td:not(.finalized):hover{
+    background-color: darkorange;
 }
 
 .board.active.not-my-turn td{

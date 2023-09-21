@@ -189,6 +189,7 @@ class SuperTicTacToe {
       this.superBoard,
     ];
     this.bigModal = document.querySelector("#superboardmodal");
+    this.bigModalMsg = document.querySelector("#superboardmodal p");
     this.playAgainBtn = document.querySelector("#play-again");
     this.startingCoord = randomCoord;
     this.myTurn = myChar == "X";
@@ -198,7 +199,7 @@ class SuperTicTacToe {
 
 SuperTicTacToe.prototype.initializeGame = function () {
   this.bigModal.style.display = "none";
-  this.bigModal = "";
+  this.bigModalMsg.innerHTML = "";
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
@@ -333,7 +334,8 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    this.bigModal.innerHTML = this.superBoard.modal.innerHTML;
+    this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
+    console.log(this.bigModal);
     this.bigModal.style.display = "block";
   });
   const exitButton = this.bigModal.querySelector("button");
