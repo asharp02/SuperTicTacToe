@@ -25,7 +25,6 @@ class TicTacToe {
     this.game = document.querySelector(`#${id}`);
     this.cells = document.querySelectorAll(`#${id} td`);
     this.modal = document.querySelector(`#${id} .modal`);
-    this.modalMsg = document.querySelector(`#${id} .modal .result_msg`);
     this.initializeBoard();
   }
 }
@@ -39,12 +38,13 @@ TicTacToe.prototype.initializeBoard = function () {
 TicTacToe.prototype.clearBoard = function () {
   this.cells.forEach(function (cell) {
     cell.innerHTML = "";
+    cell.classList.remove("finalized");
   });
   this.game.classList.remove("complete");
   this.modal.style.display = "none";
   this.board.classList.remove("active");
   this.board.classList.remove("not-my-turn");
-  this.modalMsg.innerHTML = "";
+  this.modal.innerHTML = "";
 };
 TicTacToe.prototype.placeChar = function (cell, char, clicked) {
   if (cell.classList.contains("finalized")) {
@@ -135,9 +135,7 @@ TicTacToe.prototype.isGameOver = function () {
       this.checkRows() || this.checkCols() || this.checkDiagonal();
     const fullBoard = this.isFull();
     if (hasWinner || fullBoard) {
-      this.modalMsg.innerHTML = hasWinner
-        ? `${this.winner} WINS!! 🎉`
-        : "DRAW!!";
+      this.modal.innerHTML = hasWinner ? `${this.winner}` : "D";
       this.modal.style.display = "block";
 
       // Required for superboard in the case of a draw
@@ -168,7 +166,7 @@ TicTacToe.prototype.unHighlightBoard = function () {
  * an overall game (Game that takes place on superboard).
  */
 class SuperTicTacToe {
-  constructor(randomCoord, myChar) {
+  constructor(myChar) {
     this.board0 = new TicTacToe("game0");
     this.board1 = new TicTacToe("game1");
     this.board2 = new TicTacToe("game2");
@@ -192,9 +190,9 @@ class SuperTicTacToe {
       this.superBoard,
     ];
     this.bigModal = document.querySelector("#superboardmodal");
-    this.bigModalMsg = document.querySelector("#superboardmodal .result_msg");
+    this.bigModalMsg = document.querySelector("#superboardmodal p");
     this.playAgainBtn = document.querySelector("#play-again");
-    this.startingCoord = randomCoord;
+    this.currentBoard;
     this.myTurn = myChar == "X";
     this.initializeGame();
   }
@@ -206,12 +204,10 @@ SuperTicTacToe.prototype.initializeGame = function () {
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
-  this.currentBoard = this.boards[this.startingCoord];
+  this.currentBoardIds = [];
 
-  // Represents current sub board ids where a player can make a valid move
-  this.currentBoardIds = [this.currentBoard.board.id];
   this.unHighlightBoards();
-  this.currentBoard.highlightBoard(this.myTurn);
+  this.setAllBoardsActive();
   this.handleBoardEvents();
   this.handlePlayAgainBtn();
 };
@@ -224,6 +220,7 @@ SuperTicTacToe.prototype.unHighlightBoards = function () {
 SuperTicTacToe.prototype.handleBoardEvents = function () {
   this.boards.forEach((board) => {
     board.cells.forEach((cell) => {
+      let targetBoard = this.boards[cell.dataset["board"]];
       cell.addEventListener("click", () => {
         // Only allow sub board game move if superboard game is still active
         if (this.superBoard.isGameActive && this.myTurn) {
@@ -232,27 +229,49 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
         }
       });
       cell.addEventListener("mouseover", () => {
-        if (this.superBoard.isGameActive && this.myTurn) {
-          this.currentBoard.placeChar(cell, this.currentMove, false);
+        if (
+          this.superBoard.isGameActive &&
+          this.myTurn &&
+          this.currentBoardIds.includes(cell.dataset["board"])
+        ) {
+          targetBoard.placeChar(cell, this.currentMove, false);
         }
       });
       cell.addEventListener("mouseout", () => {
-        if (this.superBoard.isGameActive && this.myTurn) {
-          this.currentBoard.removeChar(cell);
+        if (
+          this.superBoard.isGameActive &&
+          this.myTurn &&
+          this.currentBoardIds.includes(cell.dataset["board"])
+        ) {
+          targetBoard.removeChar(cell);
         }
       });
     });
   });
 };
 
+SuperTicTacToe.prototype.setAllBoardsActive = function () {
+  this.boards.forEach((board) => {
+    if (!board.isFull()) {
+      this.currentBoardIds.push(board.board.id);
+      board.highlightBoard(this.myTurn);
+    }
+  });
+};
+
+SuperTicTacToe.prototype.restartGame = function () {
+  this.boards.forEach((board) => {
+    board.clearBoard();
+    board.initializeBoard();
+  });
+  this.playAgainBtn.style.display = "none";
+  this.initializeGame();
+};
+
 SuperTicTacToe.prototype.handlePlayAgainBtn = function () {
   this.playAgainBtn.addEventListener("click", () => {
-    this.boards.forEach((board) => {
-      board.clearBoard();
-      board.initializeBoard();
-    });
-    this.playAgainBtn.style.display = "none";
-    this.initializeGame();
+    socketio.emit("restartGame", player);
+    this.restartGame();
   });
 };
 /**
@@ -284,12 +303,7 @@ SuperTicTacToe.prototype.updateSuperBoardState = function (nextBoardId) {
 
   // Handles edge case where player selects a full board
   if (this.currentBoard.isFull()) {
-    this.boards.forEach((board) => {
-      if (!board.isFull()) {
-        this.currentBoardIds.push(board.board.id);
-        board.highlightBoard(this.myTurn);
-      }
-    });
+    this.setAllBoardsActive();
   } else {
     this.currentBoardIds.push(this.currentBoard.board.id);
     this.currentBoard.highlightBoard(this.myTurn);
@@ -329,7 +343,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    this.bigModalMsg.innerHTML = this.superBoard.modalMsg.innerHTML;
+    this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
     this.bigModal.style.display = "block";
   });
   const exitButton = this.bigModal.querySelector("button");
@@ -340,23 +354,19 @@ SuperTicTacToe.prototype.endGame = function () {
 
 let socketio = io();
 let myTurn;
-let randomCoord;
 let nameInput = document.querySelector("#name-input");
 let player = nameInput.dataset.name;
+let playerChar;
 let game;
 
 socketio.on("init_game", (msg) => {
   let roomData = msg.room;
   let isFirstPlayer = msg.room["users"][player] === "X";
-  const playerChar = roomData["users"][player];
-  if (roomData["startCoord"] === undefined) {
-    // Select random coordinate within range of 0-8 as first active board
-    randomCoord = Math.floor(Math.random() * 9);
-    socketio.emit("start_coord", randomCoord);
-    game = new SuperTicTacToe(randomCoord, playerChar);
+  playerChar = roomData["users"][player];
+  if (Object.keys(roomData["users"]).length == 1) {
+    game = new SuperTicTacToe(playerChar);
   } else if (!isFirstPlayer) {
-    randomCoord = roomData["startCoord"];
-    game = new SuperTicTacToe(randomCoord, playerChar);
+    game = new SuperTicTacToe(playerChar);
   }
 });
 
@@ -366,5 +376,11 @@ socketio.on("update_board", (msg) => {
       `[data-board="${msg.boardId}"][data-coord="${msg.cellCoord}"]`
     );
     Object.getPrototypeOf(game).handleGameMove.call(game, cell);
+  }
+});
+
+socketio.on("playAgain", (charWhoRestarted) => {
+  if (playerChar !== charWhoRestarted) {
+    game.restartGame();
   }
 });
