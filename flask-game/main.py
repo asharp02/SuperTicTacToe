@@ -91,21 +91,9 @@ def connect(auth):
         return
     if not rooms[room]["users"]:
         rooms[room]["users"] = {name: "X"}
-        socketio.emit(
-            "init_game",
-            {"room": rooms[room], "startCoord": None},
-            to=room,
-        )
     elif len(rooms[room]["users"]) == 1:
         rooms[room]["users"][name] = "O"
-        socketio.emit(
-            "init_game",
-            {
-                "room": rooms[room],
-                "startCoord": rooms[room]["startCoord"],
-            },
-            to=room,
-        )
+    socketio.emit("init_game", {"room": rooms[room]}, to=room)
 
     print(f"{name} joined room {room}")
 
@@ -118,13 +106,6 @@ def disconnect():
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
-
-
-@socketio.on("start_coord")
-def startingCoord(data):
-    room = session.get("room")
-    print(data)
-    rooms[room]["startCoord"] = data
 
 
 @socketio.on("gameMove")

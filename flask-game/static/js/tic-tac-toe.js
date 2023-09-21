@@ -147,6 +147,8 @@ TicTacToe.prototype.isGameOver = function () {
   }
 };
 TicTacToe.prototype.highlightBoard = function (myTurn) {
+  console.log("calling highlight board");
+  console.log(this.board);
   this.board.classList.add("active");
   if (!myTurn) {
     this.board.classList.add("not-my-turn");
@@ -165,7 +167,7 @@ TicTacToe.prototype.unHighlightBoard = function () {
  * an overall game (Game that takes place on superboard).
  */
 class SuperTicTacToe {
-  constructor(randomCoord, myChar) {
+  constructor(myChar) {
     this.board0 = new TicTacToe("game0");
     this.board1 = new TicTacToe("game1");
     this.board2 = new TicTacToe("game2");
@@ -191,7 +193,7 @@ class SuperTicTacToe {
     this.bigModal = document.querySelector("#superboardmodal");
     this.bigModalMsg = document.querySelector("#superboardmodal p");
     this.playAgainBtn = document.querySelector("#play-again");
-    this.startingCoord = randomCoord;
+    this.currentBoard;
     this.myTurn = myChar == "X";
     this.initializeGame();
   }
@@ -203,12 +205,10 @@ SuperTicTacToe.prototype.initializeGame = function () {
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
-  this.currentBoard = this.boards[this.startingCoord];
+  this.currentBoardIds = [];
 
-  // Represents current sub board ids where a player can make a valid move
-  this.currentBoardIds = [this.currentBoard.board.id];
   this.unHighlightBoards();
-  this.currentBoard.highlightBoard(this.myTurn);
+  this.setAllBoardsActive();
   this.handleBoardEvents();
   this.handlePlayAgainBtn();
 };
@@ -221,7 +221,9 @@ SuperTicTacToe.prototype.unHighlightBoards = function () {
 SuperTicTacToe.prototype.handleBoardEvents = function () {
   this.boards.forEach((board) => {
     board.cells.forEach((cell) => {
+      let targetBoard = this.boards[cell.dataset["board"]];
       cell.addEventListener("click", () => {
+        console.log(this.myTurn);
         // Only allow sub board game move if superboard game is still active
         if (this.superBoard.isGameActive && this.myTurn) {
           this.handleGameMove(cell);
@@ -234,7 +236,7 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
           this.myTurn &&
           this.currentBoardIds.includes(cell.dataset["board"])
         ) {
-          this.currentBoard.placeChar(cell, this.currentMove, false);
+          targetBoard.placeChar(cell, this.currentMove, false);
         }
       });
       cell.addEventListener("mouseout", () => {
@@ -243,10 +245,23 @@ SuperTicTacToe.prototype.handleBoardEvents = function () {
           this.myTurn &&
           this.currentBoardIds.includes(cell.dataset["board"])
         ) {
-          this.currentBoard.removeChar(cell);
+          targetBoard.removeChar(cell);
         }
       });
     });
+  });
+};
+
+SuperTicTacToe.prototype.setAllBoardsActive = function () {
+  console.log("setting all boards active");
+  console.log(this.boards);
+  console.log("after");
+  this.boards.forEach((board) => {
+    if (!board.isFull()) {
+      console.log(board);
+      this.currentBoardIds.push(board.board.id);
+      board.highlightBoard(this.myTurn);
+    }
   });
 };
 
@@ -289,12 +304,7 @@ SuperTicTacToe.prototype.updateSuperBoardState = function (nextBoardId) {
 
   // Handles edge case where player selects a full board
   if (this.currentBoard.isFull()) {
-    this.boards.forEach((board) => {
-      if (!board.isFull()) {
-        this.currentBoardIds.push(board.board.id);
-        board.highlightBoard(this.myTurn);
-      }
-    });
+    this.setAllBoardsActive();
   } else {
     this.currentBoardIds.push(this.currentBoard.board.id);
     this.currentBoard.highlightBoard(this.myTurn);
@@ -346,7 +356,6 @@ SuperTicTacToe.prototype.endGame = function () {
 
 let socketio = io();
 let myTurn;
-let randomCoord;
 let nameInput = document.querySelector("#name-input");
 let player = nameInput.dataset.name;
 let game;
@@ -355,14 +364,10 @@ socketio.on("init_game", (msg) => {
   let roomData = msg.room;
   let isFirstPlayer = msg.room["users"][player] === "X";
   const playerChar = roomData["users"][player];
-  if (roomData["startCoord"] === undefined) {
-    // Select random coordinate within range of 0-8 as first active board
-    randomCoord = Math.floor(Math.random() * 9);
-    socketio.emit("start_coord", randomCoord);
-    game = new SuperTicTacToe(randomCoord, playerChar);
+  if (Object.keys(roomData["users"]).length == 1) {
+    game = new SuperTicTacToe(playerChar);
   } else if (!isFirstPlayer) {
-    randomCoord = roomData["startCoord"];
-    game = new SuperTicTacToe(randomCoord, playerChar);
+    game = new SuperTicTacToe(playerChar);
   }
 });
 
