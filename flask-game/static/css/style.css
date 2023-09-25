@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Outfit:wght@400;700&display=swap');
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+}
+
 .content {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .button {
@@ -10,16 +16,38 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    width: 50%;
 }
 
-.join {
+.actions {
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    gap: 40px;
+    justify-content: space-evenly;
+
+}
+
+button {
+    font-size: 25px;
+    font-family: 'Fredoka', sans-serif;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: pink;
+    color: white;
 }
 
 .create-btn {
-    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.join input {
+    text-align: center;
+    width: 78%;
+}
+
+.join {
+    width: 50%;
 }
 
 .message-box {
@@ -41,9 +69,11 @@
     width: 100%;
 }
 
-.inputs {
+input {
     padding: 10px;
-    display: flex;
+    border: 0;
+    border-radius: 10px;
+    font-size: 20px;
 }
 
 .h2 {
@@ -68,6 +98,17 @@
     color: darkgray;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    font-size: 25px;
+    height: 100%;
+    justify-content: space-around;
+}
 
-
-
+.name-input {
+    margin: auto;
+    text-align: center;
+}

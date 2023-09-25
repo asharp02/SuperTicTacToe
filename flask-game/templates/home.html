@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 {% block content %} 
 <form method="post" class="button">
-    <h2>Super Tic Tac Toe</h2>
-    <h3>Start a game!</h3>
-    <div>
-        <label>Name:</label>
-        <input type="text" placeholder="Pick a name!" name="name" value="{{name}}"/>
+    <h1>Super Tic Tac Toe</h1>
+    <div class="form-container">
+        <div class="name-input">
+            <label>Name:</label>
+            <input type="text" placeholder="Pick a name!" name="name" value="{{name}}"/>
+        </div>
+        <div class="actions">
+            <div class="new-game-container">
+                <label>Start a new game!</label><br/>
+                <button type="submit" name="create" class="create-btn"> New Game</button>
+            </div>
+            <div class="join">
+                <label>Join an existing game!</label>
+                <input type="text" placeholder="Room Code" name="code" value="{{code}}"/>
+                <button type="submit" name="join" class="create"> Join a Game</button>
+            </div>
+        </div>  
     </div>
-    <div class="join">
-        <input type="text" placeholder="Room Code" name="code" value="{{code}}"/>
-        <button type="submit" name="join" class="create"> Join a Game</button>
-    </div>
-    <button type="submit" name="create" class="create-btn"> Create a Game</button>
     {% if error %}
         <ul>
             <li>{{error}}</li>
