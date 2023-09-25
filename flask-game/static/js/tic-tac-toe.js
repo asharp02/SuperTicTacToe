@@ -222,8 +222,22 @@ SuperTicTacToe.prototype.updatePlayerList = function (
   const playerOneCell = document.querySelector(".player-one");
   const playerTwoCell = document.querySelector(".player-two");
   playerOneCell.innerHTML = `${playerOneName} (X)`;
-  playerTwoCell.innerHTML =
-    playerTwoName !== undefined ? `${playerTwoName} (O)` : "";
+  if (playerTwoName) {
+    playerTwoCell.innerHTML = `${playerTwoName} (O)`;
+    playerOneCell.classList.add("active");
+  }
+};
+
+SuperTicTacToe.prototype.changeHighlightedPlayer = function () {
+  const playerOneCell = document.querySelector(".player-one");
+  const playerTwoCell = document.querySelector(".player-two");
+  if (playerOneCell.classList.contains("active")) {
+    playerOneCell.classList.remove("active");
+    playerTwoCell.classList.add("active");
+  } else {
+    playerTwoCell.classList.remove("active");
+    playerOneCell.classList.add("active");
+  }
 };
 
 SuperTicTacToe.prototype.unHighlightBoards = function () {
@@ -343,6 +357,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
   ) {
     this.currentBoard = this.boards[clickedBoardId];
     this.currentBoard.placeChar(cell, this.currentMove, true);
+
     if (this.currentBoard.isGameOver()) {
       this.currentBoard.disableBoard();
       this.placeCharOnSuperBoard(clickedBoardId);
@@ -350,6 +365,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
     this.unHighlightBoards();
     if (this.superBoard.isGameActive) {
       this.updateSuperBoardState(cell.dataset["coord"]);
+      this.changeHighlightedPlayer();
     } else {
       this.endGame();
     }

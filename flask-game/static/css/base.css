@@ -6,12 +6,12 @@ body {
 }
 .content {
     display: block;
-    margin: auto;
-    width: 50%;
 }
 
 .container {
     display: flex;
+    justify-content: center;
+    gap: 75px;
 }
 
 .board{
@@ -106,7 +106,7 @@ body {
     color: white;
 }
 
-table td{
+.game-container table td{
     border-left: 3px solid;
     text-align: center;
     width: 33%;
@@ -205,4 +205,26 @@ tr.row.top {
 
 .board-row {
     display: flex;
+}
+
+.player-table {
+    height: 50%;
+    border-collapse: collapse;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.player-table td{
+    border: 3px white solid;
+    font-size: 40px;
+    font-family: 'Fredoka', sans-serif;
+    opacity: 0.4;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 1s, opacity 1s;
+}
+
+.player-table td.active {
+    background-color: darkorange;
+    opacity: 1;
 }
