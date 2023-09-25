@@ -2,11 +2,15 @@
 {% block content %} 
 <form method="post" class="button">
     <h1>Super Tic Tac Toe</h1>
+    <p class="rules">A more challenging take on the classic Tic Tac Toe game. A full set of rules can be found <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe">here</a>.
+    In this version, players are allowed to play on already won boards if there are still empty spaces.
+    </p>
     <div class="form-container">
         <div class="name-input">
-            <label>Name:</label>
+            <label>Step 1) Enter your Name:</label>
             <input type="text" placeholder="Pick a name!" name="name" value="{{name}}"/>
         </div>
+        <label>Step 2) Create a new game or enter a game code to join an existing game!</label>
         <div class="actions">
             <div class="new-game-container">
                 <label>Start a new game!</label><br/>
