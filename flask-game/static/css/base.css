@@ -10,6 +10,10 @@ body {
     width: 50%;
 }
 
+.container {
+    display: flex;
+}
+
 .board{
     width: 200px;
     height: 200px;
