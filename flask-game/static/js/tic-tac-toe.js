@@ -207,7 +207,6 @@ SuperTicTacToe.prototype.initializeGame = function () {
   // Represents current sub board where a player can make a valid move
   this.currentBoardIds = [];
 
-  this.updatePlayerList();
   this.unHighlightBoards();
   this.setAllBoardsActive();
   this.handleBoardEvents();
