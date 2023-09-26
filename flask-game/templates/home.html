@@ -2,23 +2,28 @@
 {% block content %} 
 <form method="post" class="button">
     <h1>Super Tic Tac Toe</h1>
-    <p class="rules">A more challenging take on the classic Tic Tac Toe game. A full set of rules can be found <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe">here</a>.
-    In this version, players are allowed to play on already won boards if there are still empty spaces.
+    <p class="rules">This game consists of a large Tic Tac Toe board made up of 9 3x3 Tic Tac Toe subboards.<br/>
+        <strong style="color:pink;">Objective:</strong> Win 3 subboards in a row horizontally, vertically
+        or diagonally. <br/>
+        <strong style="color:pink;">Gameplay:</strong> Your opponent's move in a small grid determines where you must play your next mark in the larger grid.
+        For example, if your opponent places their mark in the top-left small grid, you must make your next move in 
+        the top-left small grid of the overall 3x3 grid. 
+        A full set of rules can be found <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe" target="_blank">here</a>.
     </p>
     <div class="form-container">
         <div class="name-input">
-            <label>Step 1) Enter your Name:</label>
+            <label>Step 1. Enter your Name:</label>
             <input type="text" placeholder="Pick a name!" name="name" value="{{name}}"/>
         </div>
-        <label>Step 2) Create a new game or enter a game code to join an existing game!</label>
+        <label>Step 2. Create a new game or enter a game code to join an existing game:</label>
         <div class="actions">
             <div class="new-game-container">
                 <label>Start a new game!</label><br/>
                 <button type="submit" name="create" class="create-btn"> New Game</button>
             </div>
             <div class="join">
-                <label>Join an existing game!</label>
-                <input type="text" placeholder="Room Code" name="code" value="{{code}}"/>
+                <label>Join an existing game:</label>
+                <input type="text" placeholder="Room Code" name="code" value="{{code}}" maxlength="4"/>
                 <button type="submit" name="join" class="create"> Join a Game</button>
             </div>
         </div>  

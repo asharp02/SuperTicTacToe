@@ -31,7 +31,9 @@ body {
 }
 
 button {
+    cursor: grab;
     font-size: 25px;
+    margin-top: 16px;
     font-family: 'Fredoka', sans-serif;
     border: 0;
     border-radius: 10px;
@@ -40,14 +42,8 @@ button {
     color: white;
 }
 
-.create-btn {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 .join input {
     text-align: center;
-    width: 78%;
 }
 
 .join {
@@ -78,6 +74,7 @@ input {
     border: 0;
     border-radius: 10px;
     width: 30%;
+    font-size: 18px;
 }
 
 .h2 {
@@ -121,6 +118,7 @@ input {
 .rules {
     margin-bottom: 30px;
     font-size: 18px;
+    line-height: 1.4;
 }
 
 h1 {
@@ -135,4 +133,9 @@ label {
 button:hover {
     background-color: palevioletred;
     transition: background-color 1s;
+}
+
+a {
+    text-decoration: underline;
+    color: white;
 }
