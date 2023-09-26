@@ -195,7 +195,6 @@ class SuperTicTacToe {
     this.currentBoard;
     this.playerList = document.querySelector(".player-table");
     this.myTurn = myChar == "X";
-    this.initializeGame();
   }
 }
 
@@ -399,6 +398,10 @@ socketio.on("init_game", (msg) => {
     game = new SuperTicTacToe(playerChar);
   }
   handlePlayerList(roomData);
+});
+
+socketio.on("start_game", (msg) => {
+  Object.getPrototypeOf(game).initializeGame.call(game);
 });
 
 function handlePlayerList(roomData) {
