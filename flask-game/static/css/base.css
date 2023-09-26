@@ -184,7 +184,7 @@ body {
 
 .board.active td{
     background-color: #ffde00;
-    cursor: default;
+    cursor: grab;
 }
 
 .board.active td:not(.finalized):hover{
@@ -193,6 +193,7 @@ body {
 
 .board.active.not-my-turn td{
     background-color: #d44147;
+    cursor: not-allowed;
 }
 
 .board.active.not-my-turn td:hover{
