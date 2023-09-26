@@ -6,6 +6,7 @@ body {
 }
 .content {
     display: block;
+    height: 95vh;
 }
 
 .container {
@@ -211,8 +212,7 @@ tr.row.top {
 .player-table {
     height: 50%;
     border-collapse: collapse;
-    margin-top: auto;
-    margin-bottom: auto;
+    margin: auto;
 }
 
 .player-table td{
@@ -228,4 +228,18 @@ tr.row.top {
 .player-table td.active {
     background-color: darkorange;
     opacity: 1;
+}
+
+.player-container{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.game-container {
+    margin-top: 75px;
+    margin-bottom: auto;
+}
+
+.player-container p {
+    font-size: 20px;
+    text-align: center;
 }

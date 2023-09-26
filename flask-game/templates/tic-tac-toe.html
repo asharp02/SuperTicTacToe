@@ -3,9 +3,7 @@
 <body>
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" filename/>
     <script src="{{url_for('static', filename='js/tic-tac-toe.js')}}" defer></script>
-    <h3>Welcome {{ name }}, Game Code: {{ code }}</h3>
     <input id="name-input" data-name="{{ name }}" style="display:none">
-    <p id="waiting-msg">Waiting for opponent</p>
     <div class="container">
         <div class="game-container">
             <div id="superboardmodal" style="display:none">
@@ -220,16 +218,19 @@
             </div>
             <button id="play-again" style="display:none">Play Again</button>
         </div>
-        <table class="player-table">
-            <tbody>
-                <tr>
-                    <td class="player-one">Waiting for X...</td>
-                </tr>
-                <tr>
-                    <td class="player-two">Waiting for O...</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="player-container">
+            <p>Share your game code: <strong style="color:pink;">{{ code }}</strong></p>
+            <table class="player-table">
+                <tbody>
+                    <tr>
+                        <td class="player-one">Waiting for X...</td>
+                    </tr>
+                    <tr>
+                        <td class="player-two">Waiting for O...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 
