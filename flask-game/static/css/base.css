@@ -148,16 +148,21 @@ body {
 #superboardmodal .result_msg{
     font-size: 95px;
     margin-top: 30%;
-    background-color: lightblue;
-    font-family: arial;
+    background-color: darkorange;
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+    border-radius: 15px;
 }
 
 #superboardmodal button{
     position: absolute;
-    margin-top: 30%;
+    margin-top: 31%;
     margin-left: 46%;
-    font-size: 13px;
     font-weight: bold;
+    font-size: 12px;
+    height: 20px;
+    width: 20px;
+    padding: 0;
 }
 
 .wrapper{
@@ -281,6 +286,27 @@ tr.row.top {
 
     .game-container table td {
         font-size: 16px;
+    }
+
+    #superboardmodal {
+        width: 100px;
+        height: 100px;
+    }
+
+    #superboardmodal .result_msg{
+        font-size: 40px
+    }
+
+    #superboardmodal {
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 250px;
+        height: 250px;
+    }
+    #superboardmodal button {
+        margin-top: 32%;
+        margin-left: 40%;
     }
 
 }

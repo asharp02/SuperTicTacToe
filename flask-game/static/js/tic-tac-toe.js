@@ -135,6 +135,8 @@ TicTacToe.prototype.isGameOver = function () {
       this.checkRows() || this.checkCols() || this.checkDiagonal();
     const fullBoard = this.isFull();
     if (hasWinner || fullBoard) {
+      console.log(hasWinner);
+      console.log(this.winner);
       this.modal.innerHTML = hasWinner ? `${this.winner}` : "D";
       this.modal.style.display = "block";
 
@@ -199,8 +201,8 @@ class SuperTicTacToe {
 }
 
 SuperTicTacToe.prototype.initializeGame = function () {
-  // this.bigModal.style.display = "none";
-  // this.bigModalMsg.innerHTML = "";
+  this.bigModal.style.display = "none";
+  this.bigModalMsg.innerHTML = "";
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
@@ -372,13 +374,15 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    // this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
-    // this.bigModal.style.display = "block";
+    console.log(this.currentBoard);
+    console.log(this.currentBoard.modal);
+    this.bigModalMsg.innerHTML = `${this.currentBoard.modal.innerHTML} WINS 🎉`;
+    this.bigModal.style.display = "block";
   });
-  // const exitButton = this.bigModal.querySelector("button");
-  // exitButton.addEventListener("click", () => {
-  //   this.bigModal.style.display = "none";
-  // });
+  const exitButton = this.bigModal.querySelector("button");
+  exitButton.addEventListener("click", () => {
+    this.bigModal.style.display = "none";
+  });
 };
 
 let socketio = io();
