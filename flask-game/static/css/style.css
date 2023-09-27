@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Outfit:wght@400;700&display=swap');
+
+:root {
+    --main-font-size: 18px;
+}
+
 body {
     background-color: black;
     color: white;
@@ -10,7 +15,7 @@ body {
     justify-content: center;
 }
 
-.button {
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,17 +27,14 @@ body {
 .actions {
     display: flex;
     gap: 40px;
-    justify-content: space-between;
-
-}
-
-.actions label {
-    line-height: 2;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
 }
 
 button {
     cursor: grab;
-    font-size: 25px;
+    font-size: 22px;
     margin-top: 16px;
     font-family: 'Fredoka', sans-serif;
     border: 0;
@@ -44,10 +46,7 @@ button {
 
 .join input {
     text-align: center;
-}
-
-.join {
-    width: 50%;
+    width: 57%
 }
 
 .message-box {
@@ -73,8 +72,24 @@ input {
     padding: 10px;
     border: 0;
     border-radius: 10px;
-    width: 30%;
-    font-size: 18px;
+    font-size: var(--main-font-size);
+}
+
+.join {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.join label {
+    margin-right: 20px;
+}
+
+.new-game-container {
+    min-width: 30%;
+    text-align: center;
+    margin-block: auto;
 }
 
 .h2 {
@@ -104,9 +119,14 @@ input {
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    font-size: 22px;
+    font-size: var(--main-font-size);
     height: 100%;
     justify-content: space-around;
+    align-items: center;
+}
+
+.form-container label {
+    text-align: center;
 }
 
 .name-input {
@@ -117,8 +137,9 @@ input {
 
 .rules {
     margin-bottom: 30px;
-    font-size: 18px;
+    font-size: var(--main-font-size);
     line-height: 1.4;
+    text-align: center;
 }
 
 h1 {
@@ -138,4 +159,24 @@ button:hover {
 a {
     text-decoration: underline;
     color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    .actions {
+        flex-direction: column;
+    }
+
+    .name-input input {
+        min-width: 100%;
+    }
+    form {
+        width:80%
+    }
+
+    :root {
+        --main-font-size: 16px;
+    }
+    button {
+        font-size: 18px;
+    }
 }
