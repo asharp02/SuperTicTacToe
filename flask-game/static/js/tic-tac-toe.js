@@ -135,6 +135,8 @@ TicTacToe.prototype.isGameOver = function () {
       this.checkRows() || this.checkCols() || this.checkDiagonal();
     const fullBoard = this.isFull();
     if (hasWinner || fullBoard) {
+      console.log(hasWinner);
+      console.log(this.winner);
       this.modal.innerHTML = hasWinner ? `${this.winner}` : "D";
       this.modal.style.display = "block";
 
@@ -193,8 +195,8 @@ class SuperTicTacToe {
     this.bigModalMsg = document.querySelector("#superboardmodal p");
     this.playAgainBtn = document.querySelector("#play-again");
     this.currentBoard;
+    this.playerList = document.querySelector(".player-table");
     this.myTurn = myChar == "X";
-    this.initializeGame();
   }
 }
 
@@ -211,6 +213,33 @@ SuperTicTacToe.prototype.initializeGame = function () {
   this.handleBoardEvents();
   this.handlePlayAgainBtn();
 };
+
+SuperTicTacToe.prototype.updatePlayerList = function (
+  playerOneName,
+  playerTwoName,
+  myChar
+) {
+  const playerOneCell = document.querySelector(".player-one");
+  const playerTwoCell = document.querySelector(".player-two");
+  playerOneCell.innerHTML = `${playerOneName} (X)`;
+  if (playerTwoName) {
+    playerTwoCell.innerHTML = `${playerTwoName} (O)`;
+    playerOneCell.classList.add("active");
+  }
+};
+
+SuperTicTacToe.prototype.changeHighlightedPlayer = function () {
+  const playerOneCell = document.querySelector(".player-one");
+  const playerTwoCell = document.querySelector(".player-two");
+  if (playerOneCell.classList.contains("active")) {
+    playerOneCell.classList.remove("active");
+    playerTwoCell.classList.add("active");
+  } else {
+    playerTwoCell.classList.remove("active");
+    playerOneCell.classList.add("active");
+  }
+};
+
 SuperTicTacToe.prototype.unHighlightBoards = function () {
   this.boards.forEach(function (board) {
     board.unHighlightBoard();
@@ -328,6 +357,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
   ) {
     this.currentBoard = this.boards[clickedBoardId];
     this.currentBoard.placeChar(cell, this.currentMove, true);
+
     if (this.currentBoard.isGameOver()) {
       this.currentBoard.disableBoard();
       this.placeCharOnSuperBoard(clickedBoardId);
@@ -335,6 +365,7 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
     this.unHighlightBoards();
     if (this.superBoard.isGameActive) {
       this.updateSuperBoardState(cell.dataset["coord"]);
+      this.changeHighlightedPlayer();
     } else {
       this.endGame();
     }
@@ -343,7 +374,9 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
+    console.log(this.currentBoard);
+    console.log(this.currentBoard.modal);
+    this.bigModalMsg.innerHTML = `${this.currentBoard.modal.innerHTML} WINS 🎉`;
     this.bigModal.style.display = "block";
   });
   const exitButton = this.bigModal.querySelector("button");
@@ -368,7 +401,30 @@ socketio.on("init_game", (msg) => {
   } else if (!isFirstPlayer) {
     game = new SuperTicTacToe(playerChar);
   }
+  handlePlayerList(roomData);
 });
+
+socketio.on("start_game", (msg) => {
+  Object.getPrototypeOf(game).initializeGame.call(game);
+});
+
+function handlePlayerList(roomData) {
+  let playerX;
+  let playerO;
+  for (user in roomData["users"]) {
+    if (roomData["users"][user] === "X") {
+      playerX = user;
+    } else {
+      playerO = user;
+    }
+  }
+  Object.getPrototypeOf(game).updatePlayerList.call(
+    game,
+    playerX,
+    playerO,
+    playerChar
+  );
+}
 
 socketio.on("update_board", (msg) => {
   if (player !== msg.lastPlayerToMove) {

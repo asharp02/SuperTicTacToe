@@ -3,83 +3,79 @@
 <body>
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}" filename/>
     <script src="{{url_for('static', filename='js/tic-tac-toe.js')}}" defer></script>
-    <h3>Welcome {{ name }}, Game Code: {{ code }}</h3>
     <input id="name-input" data-name="{{ name }}" style="display:none">
-    <p id="waiting-msg">Waiting for opponent</p>
-    <div id="superboardmodal" style="display:none">
-        <button>X</button>
-        <p class="result_msg"></p>       
-    </div>
-        <div class="board-row top">
-        <div class="wrapper" id="game0">
-            <div class="modal" style="display:none">
+    <div class="container">
+        <div class="game-container">
+            <div id="superboardmodal" style="display:none">
+                <button>X</button>
+                <p class="result_msg"></p>       
             </div>
-            <table class="board" id="0">
-                    <tr class="row top">
-                        <td data-board="0" data-coord="0"></td>
-                        <td data-board="0" data-coord="1"></td>
-                        <td data-board="0" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="0" data-coord="3"></td>
-                        <td data-board="0" data-coord="4"></td>
-                        <td data-board="0" data-coord="5"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="0" data-coord="6"></td>
-                        <td data-board="0" data-coord="7"></td>
-                        <td data-board="0" data-coord="8"></td>
-                    </tr>
-            </table>
-        </div>
-        <div class="wrapper" id="game1">
-            <div class="modal" style="display:none">
-            </div>
-            <table class="board" id="1">
-                    <tr class="row top">
-                        <td data-board="1" data-coord="0"></td>
-                        <td data-board="1" data-coord="1"></td>
-                        <td data-board="1" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="1" data-coord="3"></td>
-                        <td data-board="1" data-coord="4"></td>
-                        <td data-board="1" data-coord="5"></td>
-                    </tr>
-                    <tr class=row>
-                        <td data-board="1" data-coord="6"></td>
-                        <td data-board="1" data-coord="7"></td>
-                        <td data-board="1" data-coord="8"></td>
-                    </tr>
-            </table>
-        </div>
-        <div class="wrapper" id="game2">
-            <div class="modal" style="display:none">
-            </div>
-            <table class="board" id="2">
-                    <tr class="row top">
-                        <td data-board="2" data-coord="0"></td>
-                        <td data-board="2" data-coord="1"></td>
-                        <td data-board="2" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="2" data-coord="3"></td>
-                        <td data-board="2" data-coord="4"></td>
-                        <td data-board="2" data-coord="5"></td>
-                    </tr>
-                    <tr class=row>
-                        <td data-board="2" data-coord="6"></td>
-                        <td data-board="2" data-coord="7"></td>
-                        <td data-board="2" data-coord="8"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="board-row mid">
-            <div class="wrapper" id="game3">
-                <div class="modal" style="display:none">
+            <div class="board-row top">
+                <div class="wrapper" id="game0">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="0">
+                        <tr class="row top">
+                            <td data-board="0" data-coord="0"></td>
+                            <td data-board="0" data-coord="1"></td>
+                            <td data-board="0" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="0" data-coord="3"></td>
+                            <td data-board="0" data-coord="4"></td>
+                            <td data-board="0" data-coord="5"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="0" data-coord="6"></td>
+                            <td data-board="0" data-coord="7"></td>
+                            <td data-board="0" data-coord="8"></td>
+                        </tr>
+                    </table>
                 </div>
-                <table class="board" id="3">
+                <div class="wrapper" id="game1">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="1">
+                        <tr class="row top">
+                            <td data-board="1" data-coord="0"></td>
+                            <td data-board="1" data-coord="1"></td>
+                            <td data-board="1" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="1" data-coord="3"></td>
+                            <td data-board="1" data-coord="4"></td>
+                            <td data-board="1" data-coord="5"></td>
+                        </tr>
+                        <tr class=row>
+                            <td data-board="1" data-coord="6"></td>
+                            <td data-board="1" data-coord="7"></td>
+                            <td data-board="1" data-coord="8"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="wrapper" id="game2">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="2">
+                        <tr class="row top">
+                            <td data-board="2" data-coord="0"></td>
+                            <td data-board="2" data-coord="1"></td>
+                            <td data-board="2" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="2" data-coord="3"></td>
+                            <td data-board="2" data-coord="4"></td>
+                            <td data-board="2" data-coord="5"></td>
+                        </tr>
+                        <tr class=row>
+                            <td data-board="2" data-coord="6"></td>
+                            <td data-board="2" data-coord="7"></td>
+                            <td data-board="2" data-coord="8"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="board-row mid">
+                <div class="wrapper" id="game3">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="3">
                         <tr class="row">
                             <td data-board="3" data-coord="0"></td>
                             <td data-board="3" data-coord="1"></td>
@@ -95,12 +91,11 @@
                             <td data-board="3" data-coord="7"></td>
                             <td data-board="3" data-coord="8"></td>
                         </tr>
-                </table>
-            </div>
-            <div class="wrapper" id="game4">
-                <div class="modal" style="display:none">
+                    </table>
                 </div>
-                <table class="board" id="4">
+                <div class="wrapper" id="game4">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="4">
                         <tr class="row">
                             <td data-board="4" data-coord="0"></td>
                             <td data-board="4" data-coord="1"></td>
@@ -116,12 +111,11 @@
                             <td data-board="4" data-coord="7"></td>
                             <td data-board="4" data-coord="8"></td>
                         </tr>
-                </table>
-            </div>
-            <div class="wrapper" id="game5">
-                <div class="modal" style="display:none">
+                    </table>
                 </div>
-                <table class="board" id="5">
+                <div class="wrapper" id="game5">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="5">
                         <tr class="row">
                             <td data-board="5" data-coord="0"></td>
                             <td data-board="5" data-coord="1"></td>
@@ -137,96 +131,107 @@
                             <td data-board="5" data-coord="7"></td>
                             <td data-board="5" data-coord="8"></td>
                         </tr>
-                </table>
-            </div>
-        </div>
-        <div class="board-row bottom">
-            <div class="wrapper" id="game6">
-                <div class="modal" style="display:none">
+                    </table>
                 </div>
-                <table class="board" id="6">
-                    <tr class="row">
-                        <td data-board="6" data-coord="0"></td>
-                        <td data-board="6" data-coord="1"></td>
-                        <td data-board="6" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="6" data-coord="3"></td>
-                        <td data-board="6" data-coord="4"></td>
-                        <td data-board="6" data-coord="5"></td>
-                    </tr>
-                    <tr class=row>
-                        <td data-board="6" data-coord="6"></td>
-                        <td data-board="6" data-coord="7"></td>
-                        <td data-board="6" data-coord="8"></td>
-                    </tr>
-                </table>
             </div>
-            <div class="wrapper" id="game7">
-                <div class="modal" style="display:none">
+            <div class="board-row bottom">
+                <div class="wrapper" id="game6">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="6">
+                        <tr class="row">
+                            <td data-board="6" data-coord="0"></td>
+                            <td data-board="6" data-coord="1"></td>
+                            <td data-board="6" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="6" data-coord="3"></td>
+                            <td data-board="6" data-coord="4"></td>
+                            <td data-board="6" data-coord="5"></td>
+                        </tr>
+                        <tr class=row>
+                            <td data-board="6" data-coord="6"></td>
+                            <td data-board="6" data-coord="7"></td>
+                            <td data-board="6" data-coord="8"></td>
+                        </tr>
+                    </table>
                 </div>
-                <table class="board" id="7">
-                    <tr class="row">
-                        <td data-board="7" data-coord="0"></td>
-                        <td data-board="7" data-coord="1"></td>
-                        <td data-board="7" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="7" data-coord="3"></td>
-                        <td data-board="7" data-coord="4"></td>
-                        <td data-board="7" data-coord="5"></td>
-                    </tr>
-                    <tr class=row>
-                        <td data-board="7" data-coord="6"></td>
-                        <td data-board="7" data-coord="7"></td>
-                        <td data-board="7" data-coord="8"></td>
-                    </tr>
-                </table>
+                <div class="wrapper" id="game7">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="7">
+                        <tr class="row">
+                            <td data-board="7" data-coord="0"></td>
+                            <td data-board="7" data-coord="1"></td>
+                            <td data-board="7" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="7" data-coord="3"></td>
+                            <td data-board="7" data-coord="4"></td>
+                            <td data-board="7" data-coord="5"></td>
+                        </tr>
+                        <tr class=row>
+                            <td data-board="7" data-coord="6"></td>
+                            <td data-board="7" data-coord="7"></td>
+                            <td data-board="7" data-coord="8"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="wrapper" id="game8">
+                    <div class="modal" style="display:none"></div>
+                    <table class="board" id="8">
+                        <tr class="row">
+                            <td data-board="8" data-coord="0"></td>
+                            <td data-board="8" data-coord="1"></td>
+                            <td data-board="8" data-coord="2"></td>
+                        </tr>
+                        <tr class="row">
+                            <td data-board="8" data-coord="3"></td>
+                            <td data-board="8" data-coord="4"></td>
+                            <td data-board="8" data-coord="5"></td>
+                        </tr>
+                        <tr class=row>
+                            <td data-board="8" data-coord="6"></td>
+                            <td data-board="8" data-coord="7"></td>
+                            <td data-board="8" data-coord="8"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="wrapper" id="game8">
-                <div class="modal" style="display:none">
-                </div>
-                <table class="board" id="8">
-                    <tr class="row">
-                        <td data-board="8" data-coord="0"></td>
-                        <td data-board="8" data-coord="1"></td>
-                        <td data-board="8" data-coord="2"></td>
-                    </tr>
-                    <tr class="row">
-                        <td data-board="8" data-coord="3"></td>
-                        <td data-board="8" data-coord="4"></td>
-                        <td data-board="8" data-coord="5"></td>
-                    </tr>
-                    <tr class=row>
-                        <td data-board="8" data-coord="6"></td>
-                        <td data-board="8" data-coord="7"></td>
-                        <td data-board="8" data-coord="8"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="wrapper" id="game9" style="display:none">
-                <div class="modal" style="display:none">
-                </div>
+            <div class="wrapper" id="game9" style="display:none">
+                <div class="modal" style="display:none"></div>
                 <table class="board" id="10">
-                        <tr class="row">
-                            <td id="cell0"></td>
-                            <td id="cell1"></td>
-                            <td id="cell2"></td>
-                        </tr>
-                        <tr class="row">
-                            <td id="cell3"></td>
-                            <td id="cell4"></td>
-                            <td id="cell5"></td>
-                        </tr>
-                        <tr class="row">
-                            <td id="cell6"></td>
-                            <td id="cell7"></td>
-                            <td id="cell8"></td>
-                        </tr>
+                    <tr class="row">
+                        <td id="cell0"></td>
+                        <td id="cell1"></td>
+                        <td id="cell2"></td>
+                    </tr>
+                    <tr class="row">
+                        <td id="cell3"></td>
+                        <td id="cell4"></td>
+                        <td id="cell5"></td>
+                    </tr>
+                    <tr class="row">
+                        <td id="cell6"></td>
+                        <td id="cell7"></td>
+                        <td id="cell8"></td>
+                    </tr>
                 </table>
             </div>
-    <button id="play-again" style="display:none">Play Again</button>
+            <button id="play-again" style="display:none">Play Again</button>
+        </div>
+        <div class="player-container">
+            <p>Share your game code: <strong style="color:pink;">{{ code }}</strong></p>
+            <table class="player-table">
+                <tbody>
+                    <tr>
+                        <td class="player-one">Waiting for X...</td>
+                    </tr>
+                    <tr>
+                        <td class="player-two">Waiting for O...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>

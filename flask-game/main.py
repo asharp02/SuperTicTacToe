@@ -91,9 +91,11 @@ def connect(auth):
         return
     if not rooms[room]["users"]:
         rooms[room]["users"] = {name: "X"}
+        socketio.emit("init_game", {"room": rooms[room]}, to=room)
     elif len(rooms[room]["users"]) == 1:
         rooms[room]["users"][name] = "O"
-    socketio.emit("init_game", {"room": rooms[room]}, to=room)
+        socketio.emit("init_game", {"room": rooms[room]}, to=room)
+        socketio.emit("start_game", to=room)
 
     print(f"{name} joined room {room}")
 
