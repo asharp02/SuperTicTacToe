@@ -199,8 +199,8 @@ class SuperTicTacToe {
 }
 
 SuperTicTacToe.prototype.initializeGame = function () {
-  this.bigModal.style.display = "none";
-  this.bigModalMsg.innerHTML = "";
+  // this.bigModal.style.display = "none";
+  // this.bigModalMsg.innerHTML = "";
   this.currentMove = "X";
 
   // Represents current sub board where a player can make a valid move
@@ -372,13 +372,13 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
-    this.bigModal.style.display = "block";
+    // this.bigModalMsg = `${this.superBoard.modal.innerHTML} WINS 🎉`;
+    // this.bigModal.style.display = "block";
   });
-  const exitButton = this.bigModal.querySelector("button");
-  exitButton.addEventListener("click", () => {
-    this.bigModal.style.display = "none";
-  });
+  // const exitButton = this.bigModal.querySelector("button");
+  // exitButton.addEventListener("click", () => {
+  //   this.bigModal.style.display = "none";
+  // });
 };
 
 let socketio = io();

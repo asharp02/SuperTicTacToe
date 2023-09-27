@@ -12,7 +12,9 @@ body {
 .container {
     display: flex;
     justify-content: center;
-    gap: 75px;
+    gap: 50px;
+    align-items: center;
+    height: 100%;
 }
 
 .board{
@@ -217,7 +219,6 @@ tr.row.top {
 
 .player-table td{
     border: 3px white solid;
-    font-size: 40px;
     font-family: 'Fredoka', sans-serif;
     opacity: 0.4;
     padding: 10px;
@@ -233,13 +234,53 @@ tr.row.top {
 .player-container{
     margin-top: auto;
     margin-bottom: auto;
+    font-size: 22px;
 }
 .game-container {
-    margin-top: 75px;
+    margin-top: auto;
     margin-bottom: auto;
 }
 
 .player-container p {
     font-size: 20px;
     text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .game-container {
+        margin-bottom: 0;
+    }
+
+    .player-container {
+        margin-top: 0;
+    }
+
+    .board {
+        width: 100px;
+        height: 100px;
+    }
+    .wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .modal {
+        width: 100px;
+        height: 100px;
+        font-size: 80px;
+        top: 48%;
+    }
+
+    #play-again {
+        padding: 10px;
+    }
+
+    .game-container table td {
+        font-size: 16px;
+    }
+
 }
