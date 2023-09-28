@@ -409,6 +409,8 @@ socketio.on("init_game", (msg) => {
 });
 
 socketio.on("start_game", (msg) => {
+  const getStartedMsg = document.querySelector(".get-started-msg");
+  getStartedMsg.style.display = "none";
   Object.getPrototypeOf(game).initializeGame.call(game);
 });
 
