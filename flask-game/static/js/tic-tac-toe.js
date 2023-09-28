@@ -135,8 +135,6 @@ TicTacToe.prototype.isGameOver = function () {
       this.checkRows() || this.checkCols() || this.checkDiagonal();
     const fullBoard = this.isFull();
     if (hasWinner || fullBoard) {
-      console.log(hasWinner);
-      console.log(this.winner);
       this.modal.innerHTML = hasWinner ? `${this.winner}` : "D";
       this.modal.style.display = "block";
 
@@ -374,8 +372,6 @@ SuperTicTacToe.prototype.handleGameMove = function (cell) {
 SuperTicTacToe.prototype.endGame = function () {
   this.boards.forEach((board) => {
     board.disableBoard();
-    console.log(this.currentBoard);
-    console.log(this.currentBoard.modal);
     this.bigModalMsg.innerHTML = `${this.currentBoard.modal.innerHTML} WINS 🎉`;
     this.bigModal.style.display = "block";
   });
