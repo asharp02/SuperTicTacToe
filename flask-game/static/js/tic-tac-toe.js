@@ -444,3 +444,10 @@ socketio.on("playAgain", (charWhoRestarted) => {
     game.restartGame();
   }
 });
+
+socketio.on("oppLeft", () => {
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 3000);
+  alert("Opponent has left the game!");
+});
