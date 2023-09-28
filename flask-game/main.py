@@ -77,7 +77,6 @@ def game():
 
 @socketio.on("connect")
 def connect(auth):
-    print("connected")
     room = session.get("room")
     name = session.get("name")
     if not room or not name:
@@ -97,17 +96,14 @@ def connect(auth):
         socketio.emit("init_game", {"room": rooms[room]}, to=room)
         socketio.emit("start_game", to=room)
 
-    print(f"{name} joined room {room}")
-
 
 @socketio.on("disconnect")
 def disconnect():
     room = session.get("room")
     name = session.get("name")
     leave_room(room)
-
-    send({"name": name, "message": "has left the room"}, to=room)
-    print(f"{name} has left the room {room}")
+    socketio.emit("oppLeft", to=room)
+    del rooms[room]
 
 
 @socketio.on("gameMove")
@@ -119,7 +115,6 @@ def gameMove(board_id, cell_id):
         {"lastPlayerToMove": user, "boardId": board_id, "cellCoord": cell_id},
         to=room,
     )
-    print(board_id, cell_id)
 
 
 @socketio.on("restartGame")
@@ -128,17 +123,6 @@ def restartGame(charWhoRestarted):
     user = session.get("user")
 
     socketio.emit("playAgain", charWhoRestarted, to=room)
-
-
-@socketio.on("message")
-def message(data):
-    room = session.get("room")
-    if room not in rooms:
-        return
-    content = {"name": session.get("name"), "message": data["data"]}
-    send(content, to=room)
-    rooms[room]["messages"].append(content)
-    print(f"{session.get('name')}, said: {data['data']}")
 
 
 if __name__ == "__main__":
