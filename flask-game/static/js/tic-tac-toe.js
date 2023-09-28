@@ -379,6 +379,10 @@ SuperTicTacToe.prototype.endGame = function () {
     this.bigModalMsg.innerHTML = `${this.currentBoard.modal.innerHTML} WINS 🎉`;
     this.bigModal.style.display = "block";
   });
+  if (this.superBoard.winner === "O") {
+    this.myTurn = !this.myTurn;
+    this.changeHighlightedPlayer();
+  }
   const exitButton = this.bigModal.querySelector("button");
   exitButton.addEventListener("click", () => {
     this.bigModal.style.display = "none";
