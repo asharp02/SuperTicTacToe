@@ -309,4 +309,11 @@ tr.row.top {
         margin-left: 40%;
     }
 
+    .wrapper.complete:hover .board{
+        opacity: 0;
+    }
+    .wrapper.complete:hover .modal{
+        opacity: 1;
+        display: block !important;
+    }
 }
