@@ -45,7 +45,6 @@ def home():
             return render_template(
                 "home.html", error="Please enter a room code.", code=code, name=name
             )
-
         room = code
         if create != False:
             room = generate_unique_code(4)
@@ -53,6 +52,13 @@ def home():
         elif code not in rooms:
             return render_template(
                 "home.html", error="Room does not exist.", code=code, name=name
+            )
+        elif name in rooms[room]["users"]:
+            return render_template(
+                "home.html",
+                error="That name has been taken. Enter another one!",
+                code=code,
+                name=name,
             )
 
         session["room"] = room
